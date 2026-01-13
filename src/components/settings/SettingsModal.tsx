@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from '../ui/Modal';
-import { Input } from '../ui/Input';
 import { Button } from '../ui/Button';
-import { ApiKeys } from '../../types';
-import { storage } from '../../utils/storage';
-import { Eye, EyeOff, Check } from 'lucide-react';
+import { Check, Mail, Globe } from 'lucide-react';
+import { api } from '../../services/api';
+import { useAuth } from '../../contexts/AuthContext';
+import { Language } from '../../types';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -12,86 +12,107 @@ interface SettingsModalProps {
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
-  const [apiKeys, setApiKeys] = useState<ApiKeys>({ openai: '', gemini: '' });
-  const [showOpenAI, setShowOpenAI] = useState(false);
-  const [showGemini, setShowGemini] = useState(false);
+  const { user } = useAuth();
+  const [notificationEmail, setNotificationEmail] = useState('');
+  const [language, setLanguage] = useState<Language>('ES');
   const [saved, setSaved] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      const keys = storage.getApiKeys();
-      setApiKeys(keys);
+    if (isOpen && user) {
+      setNotificationEmail(user.notificationEmail || user.email || '');
+      setLanguage(user.language || 'ES');
       setSaved(false);
     }
-  }, [isOpen]);
+  }, [isOpen, user]);
 
-  const handleSave = () => {
-    storage.saveApiKeys(apiKeys);
-    setSaved(true);
-    setTimeout(() => {
-      onClose();
-    }, 1000);
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      const updates: { notificationEmail?: string; language?: Language } = {};
+
+      if (notificationEmail !== user?.notificationEmail) {
+        updates.notificationEmail = notificationEmail;
+      }
+
+      if (language !== user?.language) {
+        updates.language = language;
+      }
+
+      if (Object.keys(updates).length > 0) {
+        await api.updateProfile(updates);
+      }
+
+      setSaved(true);
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+      alert('Error al guardar la configuración');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Configuración">
       <div className="space-y-6">
+        {/* Email Notifications Section */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 mb-3">API Keys</h3>
+          <h3 className="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
+            <Mail size={16} />
+            Notificaciones
+          </h3>
           <p className="text-sm text-slate-600 mb-4">
-            Configura tus claves de API para usar los agentes. Las claves se guardan localmente en tu navegador.
+            Recibe recordatorios y alertas en esta dirección.
           </p>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Email de Notificaciones
+            </label>
+            <input
+              type="email"
+              value={notificationEmail}
+              onChange={(e) => setNotificationEmail(e.target.value)}
+              placeholder="tu@email.com"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
+            />
+          </div>
         </div>
 
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              OpenAI API Key
-            </label>
-            <div className="relative">
-              <input
-                type={showOpenAI ? 'text' : 'password'}
-                value={apiKeys.openai}
-                onChange={(e) => setApiKeys({ ...apiKeys, openai: e.target.value })}
-                placeholder="sk-..."
-                className="w-full px-3 py-2 pr-10 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
-              />
-              <button
-                type="button"
-                onClick={() => setShowOpenAI(!showOpenAI)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-100 rounded"
-              >
-                {showOpenAI ? <EyeOff size={16} /> : <Eye size={16} />}
-              </button>
-            </div>
-            <p className="mt-1 text-xs text-slate-500">
-              Usado para agentes de texto, código y análisis
-            </p>
-          </div>
+        <div className="border-t border-slate-200 my-4" />
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Gemini API Key
-            </label>
-            <div className="relative">
-              <input
-                type={showGemini ? 'text' : 'password'}
-                value={apiKeys.gemini}
-                onChange={(e) => setApiKeys({ ...apiKeys, gemini: e.target.value })}
-                placeholder="AIza..."
-                className="w-full px-3 py-2 pr-10 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
-              />
-              <button
-                type="button"
-                onClick={() => setShowGemini(!showGemini)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-100 rounded"
-              >
-                {showGemini ? <EyeOff size={16} /> : <Eye size={16} />}
-              </button>
-            </div>
-            <p className="mt-1 text-xs text-slate-500">
-              Usado para generación de imágenes y videos
-            </p>
+        {/* Language Section */}
+        <div>
+          <h3 className="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
+            <Globe size={16} />
+            Idioma
+          </h3>
+          <p className="text-sm text-slate-600 mb-4">
+            Selecciona tu idioma preferido para la interfaz.
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setLanguage('ES')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'ES'
+                  ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+            >
+              🇪🇸 Español
+            </button>
+            <button
+              type="button"
+              onClick={() => setLanguage('EN')}
+              className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'EN'
+                  ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+            >
+              🇬🇧 English
+            </button>
           </div>
         </div>
 
@@ -100,7 +121,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             variant="secondary"
             className="flex-1"
             onClick={onClose}
-            disabled={saved}
+            disabled={isLoading || saved}
           >
             Cancelar
           </Button>
@@ -108,7 +129,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             variant="primary"
             className="flex-1"
             onClick={handleSave}
-            disabled={saved}
+            disabled={isLoading || saved}
           >
             {saved ? (
               <span className="flex items-center gap-2">
@@ -116,7 +137,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
                 Guardado
               </span>
             ) : (
-              'Guardar'
+              isLoading ? 'Guardando...' : 'Guardar'
             )}
           </Button>
         </div>

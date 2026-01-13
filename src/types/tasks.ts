@@ -35,6 +35,9 @@ export interface Card {
     position: number;
     priority: Priority;
     dueDate?: string;
+    reminderEnabled?: boolean;
+    reminderDaysBefore?: number;
+    reminderSent?: boolean;
     createdAt: string;
     updatedAt: string;
 }
@@ -72,6 +75,8 @@ export interface CreateCardDto {
     description?: string;
     priority?: Priority;
     dueDate?: string;
+    reminderEnabled?: boolean;
+    reminderDaysBefore?: number;
 }
 
 export interface UpdateCardDto {
@@ -79,6 +84,8 @@ export interface UpdateCardDto {
     description?: string;
     priority?: Priority;
     dueDate?: string;
+    reminderEnabled?: boolean;
+    reminderDaysBefore?: number;
 }
 
 export interface MoveCardDto {

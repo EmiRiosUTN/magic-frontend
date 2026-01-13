@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Calendar, AlertCircle } from 'lucide-react';
+import { Calendar, AlertCircle, Bell } from 'lucide-react';
 import { Card, Priority } from '../../types/tasks';
 
 interface TaskCardProps {
@@ -60,6 +60,12 @@ export function TaskCard({ card, onClick }: TaskCardProps) {
                 <span className={`text-xs px-2 py-1 rounded-full font-medium ${PRIORITY_STYLES[card.priority]}`}>
                     {PRIORITY_LABELS[card.priority]}
                 </span>
+
+                {card.reminderEnabled && card.dueDate && (
+                    <div className="flex items-center gap-1 text-xs text-blue-600" title={`Recordatorio ${card.reminderDaysBefore} día(s) antes`}>
+                        <Bell size={14} />
+                    </div>
+                )}
 
                 {card.dueDate && (
                     <div className={`flex items-center gap-1 text-xs ${isOverdue ? 'text-red-600' : 'text-slate-600'}`}>

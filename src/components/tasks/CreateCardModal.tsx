@@ -5,7 +5,14 @@ import { Priority } from '../../types/tasks';
 interface CreateCardModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (data: { title: string; description?: string; priority?: Priority; dueDate?: string }) => void;
+    onSubmit: (data: {
+        title: string;
+        description?: string;
+        priority?: Priority;
+        dueDate?: string;
+        reminderEnabled?: boolean;
+        reminderDaysBefore?: number;
+    }) => void;
 }
 
 const PRIORITIES = [
@@ -20,6 +27,8 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState<Priority>(Priority.MEDIUM);
     const [dueDate, setDueDate] = useState('');
+    const [reminderEnabled, setReminderEnabled] = useState(false);
+    const [reminderDaysBefore, setReminderDaysBefore] = useState(1);
 
     if (!isOpen) return null;
 
@@ -35,6 +44,8 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
             description: description.trim() || undefined,
             priority,
             dueDate: formattedDueDate,
+            reminderEnabled: dueDate ? reminderEnabled : false,
+            reminderDaysBefore: dueDate && reminderEnabled ? reminderDaysBefore : undefined,
         });
         handleClose();
     };
@@ -44,6 +55,8 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
         setDescription('');
         setPriority(Priority.MEDIUM);
         setDueDate('');
+        setReminderEnabled(false);
+        setReminderDaysBefore(1);
         onClose();
     };
 
@@ -123,6 +136,47 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                             className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                         />
                     </div>
+
+                    {/* Reminder Configuration */}
+                    {dueDate && (
+                        <div className="border-t border-slate-200 pt-4">
+                            <div className="flex items-center justify-between mb-3">
+                                <label className="block text-sm font-medium text-slate-700">
+                                    🔔 Recordatorio
+                                </label>
+                                <button
+                                    type="button"
+                                    onClick={() => setReminderEnabled(!reminderEnabled)}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${reminderEnabled ? 'bg-blue-600' : 'bg-slate-300'
+                                        }`}
+                                >
+                                    <span
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${reminderEnabled ? 'translate-x-6' : 'translate-x-1'
+                                            }`}
+                                    />
+                                </button>
+                            </div>
+                            {reminderEnabled && (
+                                <div>
+                                    <label className="block text-xs text-slate-600 mb-2">
+                                        Recordar con cuántos días de anticipación
+                                    </label>
+                                    <select
+                                        value={reminderDaysBefore}
+                                        onChange={(e) => setReminderDaysBefore(Number(e.target.value))}
+                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                    >
+                                        <option value={0}>El mismo día</option>
+                                        <option value={1}>1 día antes</option>
+                                        <option value={2}>2 días antes</option>
+                                        <option value={3}>3 días antes</option>
+                                        <option value={7}>1 semana antes</option>
+                                        <option value={14}>2 semanas antes</option>
+                                    </select>
+                                </div>
+                            )}
+                        </div>
+                    )}
 
                     <div className="flex gap-3 pt-4">
                         <button

@@ -18,6 +18,7 @@ export interface User {
   onboardingCompleted: boolean;
   subscriptionType: SubscriptionType;
   language?: Language;
+  notificationEmail?: string;
 }
 
 export interface LoginResponse {
@@ -96,4 +97,9 @@ export interface CreateConversationResponse {
 export interface SendMessageResponse {
   userMessage: Message;
   assistantMessage: Message;
+}
+
+export interface ApiKeys {
+  openai: string;
+  gemini: string;
 }

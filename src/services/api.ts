@@ -270,6 +270,40 @@ class ApiClient {
       method: 'DELETE',
     });
   }
+
+  // Reminders
+  async getReminders() {
+    return this.request('/reminders');
+  }
+
+  async createReminder(data: { title: string; description?: string; triggerAt: string }) {
+    return this.request('/reminders', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteReminder(id: string) {
+    return this.request(`/reminders/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // Admin Email Config
+  async updateEmailConfig(data: { smtpHost: string; smtpPort: number; smtpUser: string; smtpPassword?: string; fromEmail: string; fromName: string }) {
+    return this.request('/admin/email-config', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  // User Notification Settings
+  async updateProfile(data: { fullName?: string; notificationEmail?: string; language?: string }) {
+    return this.request('/users/me', {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    });
+  }
 }
 
 export const api = new ApiClient(API_BASE_URL);

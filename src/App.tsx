@@ -13,8 +13,13 @@ import { Category, Agent, Conversation, Message, CreateConversationResponse } fr
 import { api } from './services/api';
 import { Settings, ArrowLeft, LogOut, Shield, ListTodo } from 'lucide-react';
 import { IconButton } from './components/ui/IconButton';
+import { SettingsModal } from './components/settings/SettingsModal';
 
 type ViewState = 'categories' | 'agents' | 'chat' | 'admin' | 'tasks' | 'board';
+
+// ... (existing code)
+
+
 
 function AppContent() {
   const { user, isLoading: authLoading, logout, isAuthenticated } = useAuth();
@@ -28,6 +33,7 @@ function AppContent() {
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState<{
     isOpen: boolean;
     conversationToDelete?: { title: string; messageCount: number };
@@ -309,6 +315,12 @@ function AppContent() {
             />
           )}
           <IconButton
+            icon={<Settings size={20} />}
+            onClick={() => setShowSettings(true)}
+            label="Configuración"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+          <IconButton
             icon={<LogOut size={20} />}
             onClick={logout}
             label="Salir"
@@ -316,6 +328,7 @@ function AppContent() {
           />
         </div>
         <CategorySelection categories={categories} onSelectCategory={handleSelectCategory} />
+        <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
       </>
     );
   }

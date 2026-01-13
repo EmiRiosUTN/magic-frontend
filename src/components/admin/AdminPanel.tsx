@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Users, FolderKanban, Bot, ArrowLeft } from 'lucide-react';
+import { Users, FolderKanban, Bot, ArrowLeft, Mail } from 'lucide-react';
 import { IconButton } from '../ui/IconButton';
 import { UserManagement } from './UserManagement';
 import { CategoryManagement } from './CategoryManagement';
 import { AgentManagement } from './AgentManagement';
+import { EmailConfig } from './EmailConfig';
 
-type AdminTab = 'users' | 'categories' | 'agents';
+type AdminTab = 'users' | 'categories' | 'agents' | 'email';
 
 interface AdminPanelProps {
   onBack: () => void;
@@ -18,6 +19,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack }) => {
     { id: 'users' as AdminTab, label: 'Usuarios', icon: Users },
     { id: 'categories' as AdminTab, label: 'Categorías', icon: FolderKanban },
     { id: 'agents' as AdminTab, label: 'Agentes', icon: Bot },
+    { id: 'email' as AdminTab, label: 'Email', icon: Mail },
   ];
 
   return (
@@ -33,7 +35,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack }) => {
             />
             <div>
               <h1 className="text-2xl font-bold text-slate-900">Panel de Administración</h1>
-              <p className="text-sm text-slate-600">Gestiona usuarios, categorías y agentes</p>
+              <p className="text-sm text-slate-600">Gestiona usuarios, categorías, agentes y configuración</p>
             </div>
           </div>
 
@@ -44,11 +46,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack }) => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                    activeTab === tab.id
-                      ? 'bg-slate-900 text-white'
-                      : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${activeTab === tab.id
+                    ? 'bg-slate-900 text-white'
+                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+                    }`}
                 >
                   <Icon size={18} />
                   {tab.label}
@@ -64,6 +65,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ onBack }) => {
           {activeTab === 'users' && <UserManagement />}
           {activeTab === 'categories' && <CategoryManagement />}
           {activeTab === 'agents' && <AgentManagement />}
+          {activeTab === 'email' && <EmailConfig />}
         </div>
       </main>
     </div>
