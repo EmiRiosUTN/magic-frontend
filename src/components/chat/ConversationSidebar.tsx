@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MessageSquarePlus, Trash2, X, Menu } from 'lucide-react';
 import { Conversation } from '../../types';
 import { IconButton } from '../ui/IconButton';
+import { ConfirmationModal } from '../ui/ConfirmationModal';
 
 interface ConversationSidebarProps {
   conversations: Conversation[];
@@ -23,17 +24,26 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
   maxConversations,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [confirmationState, setConfirmationState] = useState<{
+    isOpen: boolean;
+    conversationId: string | null;
+  }>({
+    isOpen: false,
+    conversationId: null,
+  });
 
-  const handleDelete = async (conversationId: string, e: React.MouseEvent) => {
+  const handleDeleteClick = (conversationId: string, e: React.MouseEvent) => {
     e.stopPropagation();
+    setConfirmationState({
+      isOpen: true,
+      conversationId: conversationId,
+    });
+  };
 
-    if (deletingId === conversationId) {
-      onDeleteConversation(conversationId);
-      setDeletingId(null);
-    } else {
-      setDeletingId(conversationId);
-      setTimeout(() => setDeletingId(null), 3000);
+  const handleConfirmDelete = () => {
+    if (confirmationState.conversationId) {
+      onDeleteConversation(confirmationState.conversationId);
+      setConfirmationState({ isOpen: false, conversationId: null });
     }
   };
 
@@ -67,117 +77,118 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
   }
 
   return (
-    <div className="w-80 bg-white border-r border-slate-200 flex flex-col h-full">
-      <div className="p-4 border-b border-slate-200">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-slate-900">Conversaciones</h3>
-          <IconButton
-            icon={<X size={18} />}
-            onClick={() => setIsOpen(false)}
-            label="Cerrar"
-            className="hover:bg-slate-100"
-          />
-        </div>
-
-        <button
-          onClick={onNewConversation}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm"
-        >
-          <MessageSquarePlus size={18} />
-          Nueva Conversación
-        </button>
-
-        <div className="mt-3 text-xs text-slate-500 text-center">
-          {conversations.length} / {maxConversations} conversaciones
-        </div>
-      </div>
-
-      <div className="flex-1 overflow-y-auto">
-        {conversations.length === 0 ? (
-          <div className="p-6 text-center">
-            <div className="text-slate-400 mb-2">
-              <MessageSquarePlus size={32} className="mx-auto" />
-            </div>
-            <p className="text-sm text-slate-600">No hay conversaciones</p>
-            <p className="text-xs text-slate-500 mt-1">
-              Crea una nueva para comenzar
-            </p>
+    <>
+      <div className="w-80 bg-white border-r border-slate-200 flex flex-col h-full">
+        <div className="p-4 border-b border-slate-200">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-semibold text-slate-900">Conversaciones</h3>
+            <IconButton
+              icon={<X size={18} />}
+              onClick={() => setIsOpen(false)}
+              label="Cerrar"
+              className="hover:bg-slate-100"
+            />
           </div>
-        ) : (
-          <div className="p-2 space-y-1">
-            {conversations.map((conversation) => {
-              const isActive = conversation.id === currentConversationId;
-              const isDeleting = deletingId === conversation.id;
 
-              return (
-                <div
-                  key={conversation.id}
-                  onClick={() => onSelectConversation(conversation.id)}
-                  className={`group relative p-3 rounded-lg cursor-pointer transition-all ${
-                    isActive
-                      ? 'bg-slate-900 text-white shadow-sm'
+          <button
+            onClick={onNewConversation}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium text-sm"
+          >
+            <MessageSquarePlus size={18} />
+            Nueva conversación
+          </button>
+
+          <div className="mt-3 text-xs text-slate-500 text-center">
+            {conversations.length} / {maxConversations} conversaciones
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto">
+          {conversations.length === 0 ? (
+            <div className="p-6 text-center">
+              <div className="text-slate-400 mb-2">
+                <MessageSquarePlus size={32} className="mx-auto" />
+              </div>
+              <p className="text-sm text-slate-600">No hay conversaciones</p>
+              <p className="text-xs text-slate-500 mt-1">
+                Crea una nueva para comenzar
+              </p>
+            </div>
+          ) : (
+            <div className="p-2 space-y-1">
+              {conversations.map((conversation) => {
+                const isActive = conversation.id === currentConversationId;
+
+                return (
+                  <div
+                    key={conversation.id}
+                    onClick={() => onSelectConversation(conversation.id)}
+                    className={`group relative p-3 rounded-lg cursor-pointer transition-all ${isActive
+                      ? 'bg-gray-600 text-white shadow-sm'
                       : 'hover:bg-slate-50 text-slate-700'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <h4 className={`font-medium text-sm truncate ${
-                        isActive ? 'text-white' : 'text-slate-900'
-                      }`}>
-                        {conversation.title}
-                      </h4>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-xs ${
-                          isActive ? 'text-slate-300' : 'text-slate-500'
-                        }`}>
-                          {conversation.messageCount} mensajes
-                        </span>
-                        <span className={`text-xs ${
-                          isActive ? 'text-slate-400' : 'text-slate-400'
-                        }`}>
-                          •
-                        </span>
-                        <span className={`text-xs ${
-                          isActive ? 'text-slate-300' : 'text-slate-500'
-                        }`}>
-                          {formatDate(conversation.lastMessageAt)}
-                        </span>
+                      }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <h4 className={`font-medium text-sm truncate ${isActive ? 'text-white' : 'text-slate-900'
+                          }`}>
+                          {conversation.title}
+                        </h4>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className={`text-xs ${isActive ? 'text-slate-300' : 'text-slate-500'
+                            }`}>
+                            {conversation.messageCount} mensajes
+                          </span>
+                          <span className={`text-xs ${isActive ? 'text-slate-400' : 'text-slate-400'
+                            }`}>
+                            •
+                          </span>
+                          <span className={`text-xs ${isActive ? 'text-slate-300' : 'text-slate-500'
+                            }`}>
+                            {formatDate(conversation.lastMessageAt)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
 
-                    <button
-                      onClick={(e) => handleDelete(conversation.id, e)}
-                      className={`p-1.5 rounded transition-colors ${
-                        isDeleting
-                          ? 'bg-red-500 text-white'
-                          : isActive
+                      <button
+                        onClick={(e) => handleDeleteClick(conversation.id, e)}
+                        className={`p-1.5 rounded transition-colors ${isActive
                           ? 'hover:bg-slate-800 text-slate-300 opacity-0 group-hover:opacity-100'
                           : 'hover:bg-red-50 text-slate-400 hover:text-red-600 opacity-0 group-hover:opacity-100'
-                      }`}
-                      title={isDeleting ? 'Click de nuevo para confirmar' : 'Eliminar'}
-                    >
-                      <Trash2 size={14} />
-                    </button>
+                          }`}
+                        title="Eliminar"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
 
-                  {isDeleting && (
-                    <div className="absolute inset-0 bg-red-500 bg-opacity-10 rounded-lg pointer-events-none" />
-                  )}
-                </div>
-              );
-            })}
+        <div className="p-4 border-t border-slate-200 bg-slate-50">
+          <div className="text-xs text-slate-600">
+            <p className="font-medium mb-1">{agentName}</p>
+            <p className="text-slate-500">
+              Límite: {maxConversations} conversaciones máximo
+            </p>
           </div>
-        )}
-      </div>
-
-      <div className="p-4 border-t border-slate-200 bg-slate-50">
-        <div className="text-xs text-slate-600">
-          <p className="font-medium mb-1">{agentName}</p>
-          <p className="text-slate-500">
-            Límite: {maxConversations} conversaciones máximo
-          </p>
         </div>
       </div>
-    </div>
+
+      <ConfirmationModal
+        isOpen={confirmationState.isOpen}
+        onClose={() => setConfirmationState({ isOpen: false, conversationId: null })}
+        onConfirm={handleConfirmDelete}
+        title="Eliminar conversación"
+        message="¿Estás seguro de que quieres eliminar esta conversación? Esta acción no se puede deshacer."
+        confirmText="Eliminar"
+        cancelText="Cancelar"
+        type="danger"
+    
+      />
+    </>
   );
 };

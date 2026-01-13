@@ -1,6 +1,7 @@
 import React from 'react';
 import { Category } from '../../types';
-import { getCategoryIcon } from '../icons/CategoryIcons';
+import { getCategoryConfig } from '../../config/categoryConfig';
+
 
 interface CategorySelectionProps {
   categories: Category[];
@@ -12,14 +13,14 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
   onSelectCategory,
 }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex flex-col">
-      <header className="border-b border-slate-200 bg-white/80 backdrop-blur-sm">
+    <div className="min-h-screen page-bg flex flex-col">
+      <header>
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
+            <h1 className="text-5xl font-bold text-slate-700 mb-2 font-ubuntu">
               Selecciona una categoría
             </h1>
-            <p className="text-slate-600">
+            <p className="text-slate-600 font-roboto">
               Elige el tipo de agente que necesitas para tu tarea
             </p>
           </div>
@@ -30,13 +31,13 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => {
-              const Icon = getCategoryIcon(category.id);
+              const { icon: Icon, textColor, borderColor } = getCategoryConfig(category.name);
 
               return (
                 <button
                   key={category.id}
                   onClick={() => onSelectCategory(category.id)}
-                  className="group relative bg-white p-8 rounded-2xl border-2 border-slate-200 hover:border-slate-400 transition-all hover:shadow-xl text-left overflow-hidden"
+                  className={`group relative bg-white p-8 rounded-2xl ${borderColor} transition-all text-left overflow-hidden`}
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-5 transition-opacity`} />
 
@@ -45,14 +46,14 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
                       <Icon size={28} className="text-white" />
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    <h3 className="text-xl font-bold text-slate-900 mb-2 font-ubuntu">
                       {category.name}
                     </h3>
-                    <p className="text-sm text-slate-600 leading-relaxed">
+                    <p className="text-sm text-slate-600 leading-relaxed font-roboto">
                       {category.description}
                     </p>
 
-                    <div className="mt-6 flex items-center text-sm font-medium text-slate-400 group-hover:text-slate-700 transition-colors">
+                    <div className={`mt-6 flex items-center text-sm font-medium ${textColor} transition-colors`}>
                       <span>Ver agentes</span>
                       <svg
                         className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"

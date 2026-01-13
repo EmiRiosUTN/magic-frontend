@@ -17,21 +17,8 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   onSendMessage,
   isLoading,
 }) => {
-  const Icon = Icons[agent.icon as keyof typeof Icons] as React.ComponentType<{ size?: number; className?: string }>;
-
   return (
-    <div className="flex-1 flex flex-col bg-slate-50 relative">
-      <div className="bg-white border-b border-slate-200 px-6 py-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-slate-100 rounded-lg">
-            {Icon && <Icon size={20} className="text-slate-700" />}
-          </div>
-          <div>
-            <h2 className="text-lg font-semibold text-slate-900">{agent.name}</h2>
-            <p className="text-xs text-slate-600">{agent.description}</p>
-          </div>
-        </div>
-      </div>
+    <div className="flex-1 flex flex-col bg-slate-50 relative overflow-hidden">
 
       <MessageList messages={chat?.messages || []} />
 

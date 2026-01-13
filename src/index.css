@@ -28,3 +28,8 @@
     @apply bg-slate-400;
   }
 }
+
+.page-bg {
+  background-color: #f7f8fa;
+  background-image: radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.03) 0%, transparent 50%);
+}
