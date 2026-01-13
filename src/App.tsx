@@ -6,16 +6,20 @@ import { ChatWindow } from './components/chat/ChatWindow';
 import { ConversationSidebar } from './components/chat/ConversationSidebar';
 import { CategorySelection } from './components/landing/CategorySelection';
 import { AgentSelection } from './components/landing/AgentSelection';
+import { LandingPage } from './components/landing/LandingPage';
 import { ConfirmationModal } from './components/ui/ConfirmationModal';
 import { Category, Agent, Conversation, Message, CreateConversationResponse } from './types';
 import { api } from './services/api';
-import { Settings, ArrowLeft, LogOut, Shield } from 'lucide-react';
+import { Navbar } from './components/layout/Navbar';
+import { ArrowLeft, LogOut } from 'lucide-react';
 import { IconButton } from './components/ui/IconButton';
+import { getCategoryConfig } from './config/categoryConfig';
 
 type ViewState = 'categories' | 'agents' | 'chat' | 'admin';
 
 function AppContent() {
   const { user, isLoading: authLoading, logout, isAuthenticated } = useAuth();
+  const [showLogin, setShowLogin] = useState(false);
   const [viewState, setViewState] = useState<ViewState>('categories');
   const [categories, setCategories] = useState<Category[]>([]);
   const [agents, setAgents] = useState<Agent[]>([]);
@@ -31,7 +35,7 @@ function AppContent() {
     onConfirm: () => void;
   }>({
     isOpen: false,
-    onConfirm: () => {},
+    onConfirm: () => { },
   });
 
   useEffect(() => {
@@ -45,24 +49,12 @@ function AppContent() {
       const response: any = await api.getCategories();
       const categoriesData = (response.categories || []).map((cat: any) => ({
         ...cat,
-        color: getColorForCategory(cat.id),
+        color: getCategoryConfig(cat.name).color,
       }));
       setCategories(categoriesData);
     } catch (err) {
       console.error('Error loading categories:', err);
     }
-  };
-
-  const getColorForCategory = (id: string) => {
-    const colors = [
-      'from-blue-500 to-cyan-500',
-      'from-green-500 to-emerald-500',
-      'from-orange-500 to-red-500',
-      'from-purple-500 to-pink-500',
-      'from-indigo-500 to-blue-500',
-      'from-teal-500 to-green-500',
-    ];
-    return colors[Math.abs(id.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % colors.length];
   };
 
   const handleSelectCategory = async (categoryId: string) => {
@@ -270,7 +262,7 @@ function AppContent() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-slate-100">
+      <div className="min-h-screen flex items-center justify-center page-bg">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-slate-900 mx-auto mb-4"></div>
           <p className="text-slate-600">Cargando...</p>
@@ -280,7 +272,10 @@ function AppContent() {
   }
 
   if (!isAuthenticated) {
-    return <LoginPage />;
+    if (showLogin) {
+      return <LoginPage />;
+    }
+    return <LandingPage onEnter={() => setShowLogin(true)} />;
   }
 
   if (viewState === 'admin') {
@@ -290,22 +285,11 @@ function AppContent() {
   if (viewState === 'categories') {
     return (
       <>
-        <div className="fixed top-4 right-4 z-50 flex gap-2">
-          {user?.role === 'ADMIN' && (
-            <IconButton
-              icon={<Shield size={20} />}
-              onClick={() => setViewState('admin')}
-              label="Admin"
-              className="bg-white shadow-lg hover:bg-slate-100"
-            />
-          )}
-          <IconButton
-            icon={<LogOut size={20} />}
-            onClick={logout}
-            label="Salir"
-            className="bg-white shadow-lg hover:bg-slate-100"
-          />
-        </div>
+        <Navbar
+          userRole={user?.role}
+          onLogout={logout}
+          onAdminClick={() => setViewState('admin')}
+        />
         <CategorySelection categories={categories} onSelectCategory={handleSelectCategory} />
       </>
     );
@@ -314,14 +298,11 @@ function AppContent() {
   if (viewState === 'agents' && selectedCategory) {
     return (
       <>
-        <div className="fixed top-4 right-4 z-50">
-          <IconButton
-            icon={<LogOut size={20} />}
-            onClick={logout}
-            label="Salir"
-            className="bg-white shadow-lg hover:bg-slate-100"
-          />
-        </div>
+        <Navbar
+          userRole={user?.role}
+          onLogout={logout}
+          onAdminClick={() => setViewState('admin')}
+        />
         <AgentSelection
           category={selectedCategory}
           agents={agents}

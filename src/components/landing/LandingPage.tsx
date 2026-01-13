@@ -30,7 +30,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
   const topAgents = AGENTS.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 h-screen overflow-y-auto">
       <nav className="border-b border-slate-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -47,7 +47,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
       </nav>
 
       <main>
-        <section className="max-w-7xl mx-auto px-6 py-20 md:py-32">
+        <section className="max-w-7xl mx-auto px-6 py-10">
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900/5 rounded-full mb-8">
               <Sparkles size={16} className="text-slate-700" />
@@ -75,7 +75,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
           </div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 py-16">
+        <section className="max-w-7xl mx-auto px-6 py-10">
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => {
               const Icon = feature.icon;
@@ -99,7 +99,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
           </div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 py-16">
+        <section className="max-w-7xl mx-auto px-6 py-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               Agentes especializados
@@ -147,7 +147,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnter }) => {
           </div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 py-20 mb-20">
+        <section className="max-w-7xl mx-auto px-6 py-10 mb-10">
           <div className="bg-slate-900 rounded-3xl p-12 md:p-16 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Listo para comenzar?

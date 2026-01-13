@@ -3,7 +3,7 @@ import { Agent, Category } from '../../types';
 import * as Icons from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
 import { IconButton } from '../ui/IconButton';
-import { getCategoryIcon } from '../icons/CategoryIcons';
+import { getCategoryConfig } from '../../config/categoryConfig';
 
 interface AgentSelectionProps {
   category: Category;
@@ -18,10 +18,10 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
   onSelectAgent,
   onBack,
 }) => {
-  const CategoryIcon = getCategoryIcon(category.id);
+  const { icon: CategoryIcon } = getCategoryConfig(category.name);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex flex-col">
+    <div className="min-h-screen page-bg flex flex-col">
       <header className="border-b border-slate-200 bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex items-center gap-4 mb-4">
@@ -75,11 +75,10 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
                         {agent.description}
                       </p>
                       <div className="flex items-center gap-2">
-                        <span className={`text-xs px-2 py-1 rounded-full ${
-                          agent.model === 'openai'
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-blue-100 text-blue-700'
-                        }`}>
+                        <span className={`text-xs px-2 py-1 rounded-full ${agent.model === 'openai'
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-blue-100 text-blue-700'
+                          }`}>
                           {agent.model === 'openai' ? 'OpenAI' : 'Gemini'}
                         </span>
                       </div>
