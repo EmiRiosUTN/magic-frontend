@@ -7,12 +7,14 @@ import { ConversationSidebar } from './components/chat/ConversationSidebar';
 import { CategorySelection } from './components/landing/CategorySelection';
 import { AgentSelection } from './components/landing/AgentSelection';
 import { ConfirmationModal } from './components/ui/ConfirmationModal';
+import { ProjectsView } from './components/tasks/ProjectsView';
+import { BoardView } from './components/tasks/BoardView';
 import { Category, Agent, Conversation, Message, CreateConversationResponse } from './types';
 import { api } from './services/api';
-import { Settings, ArrowLeft, LogOut, Shield } from 'lucide-react';
+import { Settings, ArrowLeft, LogOut, Shield, ListTodo } from 'lucide-react';
 import { IconButton } from './components/ui/IconButton';
 
-type ViewState = 'categories' | 'agents' | 'chat' | 'admin';
+type ViewState = 'categories' | 'agents' | 'chat' | 'admin' | 'tasks' | 'board';
 
 function AppContent() {
   const { user, isLoading: authLoading, logout, isAuthenticated } = useAuth();
@@ -21,6 +23,7 @@ function AppContent() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -31,7 +34,7 @@ function AppContent() {
     onConfirm: () => void;
   }>({
     isOpen: false,
-    onConfirm: () => {},
+    onConfirm: () => { },
   });
 
   useEffect(() => {
@@ -291,6 +294,12 @@ function AppContent() {
     return (
       <>
         <div className="fixed top-4 right-4 z-50 flex gap-2">
+          <IconButton
+            icon={<ListTodo size={20} />}
+            onClick={() => setViewState('tasks')}
+            label="Tareas"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
           {user?.role === 'ADMIN' && (
             <IconButton
               icon={<Shield size={20} />}
@@ -391,6 +400,45 @@ function AppContent() {
           conversationToDelete={confirmationModal.conversationToDelete}
         />
       </>
+    );
+  }
+
+  if (viewState === 'tasks') {
+    return (
+      <>
+        <div className="fixed top-4 right-4 z-50 flex gap-2">
+          <IconButton
+            icon={<ArrowLeft size={20} />}
+            onClick={() => setViewState('categories')}
+            label="Volver"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+          <IconButton
+            icon={<LogOut size={20} />}
+            onClick={logout}
+            label="Salir"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+        </div>
+        <ProjectsView
+          onSelectProject={(projectId) => {
+            setSelectedProjectId(projectId);
+            setViewState('board');
+          }}
+        />
+      </>
+    );
+  }
+
+  if (viewState === 'board' && selectedProjectId) {
+    return (
+      <BoardView
+        projectId={selectedProjectId}
+        onBack={() => {
+          setSelectedProjectId(null);
+          setViewState('tasks');
+        }}
+      />
     );
   }
 

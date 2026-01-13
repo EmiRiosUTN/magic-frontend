@@ -178,6 +178,98 @@ class ApiClient {
       method: 'POST',
     });
   }
+
+  // Projects
+  async getProjects(includeArchived = false) {
+    return this.request(`/projects?includeArchived=${includeArchived}`);
+  }
+
+  async getProject(id: string) {
+    return this.request(`/projects/${id}`);
+  }
+
+  async createProject(data: { name: string; description?: string; color?: string }) {
+    return this.request('/projects', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateProject(id: string, data: { name?: string; description?: string; color?: string; isArchived?: boolean }) {
+    return this.request(`/projects/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async archiveProject(id: string, isArchived: boolean) {
+    return this.request(`/projects/${id}/archive`, {
+      method: 'PATCH',
+      body: JSON.stringify({ isArchived }),
+    });
+  }
+
+  async deleteProject(id: string) {
+    return this.request(`/projects/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // Sections
+  async createSection(data: { projectId: string; name: string }) {
+    return this.request('/sections', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateSection(id: string, data: { name: string }) {
+    return this.request(`/sections/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async reorderSections(data: { projectId: string; sections: { id: string; position: number }[] }) {
+    return this.request('/sections/reorder', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteSection(id: string) {
+    return this.request(`/sections/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // Cards
+  async createCard(data: { sectionId: string; title: string; description?: string; priority?: string; dueDate?: string }) {
+    return this.request('/cards', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateCard(id: string, data: { title?: string; description?: string; priority?: string; dueDate?: string }) {
+    return this.request(`/cards/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async moveCard(id: string, data: { targetSectionId: string; newPosition: number }) {
+    return this.request(`/cards/${id}/move`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async deleteCard(id: string) {
+    return this.request(`/cards/${id}`, {
+      method: 'DELETE',
+    });
+  }
 }
 
 export const api = new ApiClient(API_BASE_URL);
