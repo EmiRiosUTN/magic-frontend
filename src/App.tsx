@@ -180,6 +180,7 @@ function AppContent() {
       }
     } catch (err) {
       console.error('Error creating conversation:', err);
+      alert(err instanceof Error ? err.message : 'Error al crear conversación');
     } finally {
       setIsLoading(false);
     }
@@ -279,29 +280,40 @@ function AppContent() {
   }
 
   if (viewState === 'admin') {
-    return <AdminPanel onBack={() => setViewState('categories')} />;
+    return (
+      <div className="min-h-screen bg-slate-50 pt-16">
+        <Navbar
+          userRole={user?.role}
+          onLogout={logout}
+          onAdminClick={() => setViewState('admin')}
+          onLogoClick={handleBackToCategories}
+        />
+        <AdminPanel onBack={() => setViewState('categories')} />
+      </div>
+    );
   }
 
   if (viewState === 'categories') {
     return (
-      <>
+      <div className="min-h-screen bg-slate-50 pt-16">
         <Navbar
           userRole={user?.role}
           onLogout={logout}
           onAdminClick={() => setViewState('admin')}
         />
         <CategorySelection categories={categories} onSelectCategory={handleSelectCategory} />
-      </>
+      </div>
     );
   }
 
   if (viewState === 'agents' && selectedCategory) {
     return (
-      <>
+      <div className="min-h-screen bg-slate-50 pt-16">
         <Navbar
           userRole={user?.role}
           onLogout={logout}
           onAdminClick={() => setViewState('admin')}
+          onLogoClick={handleBackToCategories}
         />
         <AgentSelection
           category={selectedCategory}
@@ -309,7 +321,7 @@ function AppContent() {
           onSelectAgent={handleSelectAgent}
           onBack={handleBackToCategories}
         />
-      </>
+      </div>
     );
   }
 
@@ -336,7 +348,14 @@ function AppContent() {
 
     return (
       <>
-        <div className="flex h-screen bg-slate-50">
+        <Navbar
+          userRole={user?.role}
+          onLogout={logout}
+          onAdminClick={() => setViewState('admin')}
+        />
+
+        {/* Fixed Sidebar Wrapper */}
+        <div className="fixed top-16 left-0 bottom-0 w-80 border-r border-slate-200 bg-white z-40">
           <ConversationSidebar
             conversations={conversations}
             currentConversationId={currentConversation.id}
@@ -346,18 +365,18 @@ function AppContent() {
             onDeleteConversation={handleDeleteConversation}
             maxConversations={user?.subscriptionType.maxConversationsPerAgent || 5}
           />
+        </div>
 
-          <div className="flex-1 flex flex-col">
-            <div className="flex items-center gap-3 px-6 py-4 bg-white border-b border-slate-200">
-              <IconButton icon={<ArrowLeft size={20} />} onClick={handleBackToAgents} label="Atrás" />
-              <div className="flex-1">
-                <h2 className="font-semibold text-slate-900">{selectedAgent.name}</h2>
-                <p className="text-sm text-slate-600">{selectedAgent.description}</p>
-              </div>
-              <IconButton icon={<LogOut size={20} />} onClick={logout} label="Salir" />
+        {/* Fixed Main Content Wrapper */}
+        <div className="fixed top-16 left-80 right-0 bottom-0 bg-slate-50 flex flex-col z-0">
+          <div className="flex items-center gap-3 px-6 py-4 bg-white border-b border-slate-200 flex-none">
+            <IconButton icon={<ArrowLeft size={20} />} onClick={handleBackToAgents} label="Atrás" />
+            <div className="flex-1">
+              <h2 className="font-semibold text-slate-900">{selectedAgent.name}</h2>
+              <p className="text-sm text-slate-600">{selectedAgent.description}</p>
             </div>
-            <ChatWindow agent={agentData} chat={chatData} onSendMessage={handleSendMessage} isLoading={isLoading} />
           </div>
+          <ChatWindow agent={agentData} chat={chatData} onSendMessage={handleSendMessage} isLoading={isLoading} />
         </div>
 
         <ConfirmationModal
@@ -369,7 +388,6 @@ function AppContent() {
           confirmText="Crear nueva conversación"
           cancelText="Cancelar"
           type="warning"
-          conversationToDelete={confirmationModal.conversationToDelete}
         />
       </>
     );

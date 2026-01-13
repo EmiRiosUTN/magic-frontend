@@ -25,8 +25,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   message,
   confirmText = 'Confirmar',
   cancelText = 'Cancelar',
-  type = 'warning',
-  conversationToDelete,
+  type = 'warning'
 }) => {
   if (!isOpen) return null;
 
@@ -47,7 +46,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       bg: 'bg-blue-50',
       border: 'border-blue-200',
       icon: 'text-blue-600',
-      button: 'bg-blue-600 hover:bg-blue-700',
+      button: 'bg-red-700 hover:bg-blue-700',
     },
   };
 
@@ -66,23 +65,9 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
               <h3 className="text-lg font-bold text-slate-900 mb-2">
                 {title}
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 {message}
               </p>
-
-              {conversationToDelete && (
-                <div className={`p-4 ${currentColors.bg} rounded-lg border ${currentColors.border}`}>
-                  <p className="text-sm font-medium text-slate-900 mb-1">
-                    Se eliminará:
-                  </p>
-                  <p className="text-sm text-slate-700 font-medium">
-                    "{conversationToDelete.title}"
-                  </p>
-                  <p className="text-xs text-slate-600 mt-1">
-                    {conversationToDelete.messageCount} mensajes
-                  </p>
-                </div>
-              )}
             </div>
 
             <button
@@ -97,7 +82,8 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         <div className="flex gap-3 p-6 pt-0">
           <Button
             onClick={onClose}
-            className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700"
+            variant="secondary"
+            className="flex-1"
           >
             {cancelText}
           </Button>
@@ -106,7 +92,8 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
               onConfirm();
               onClose();
             }}
-            className={`flex-1 text-white ${currentColors.button}`}
+            variant={type === 'danger' ? 'danger' : 'primary'}
+            className={`flex-1 ${currentColors.button}`}
           >
             {confirmText}
           </Button>
