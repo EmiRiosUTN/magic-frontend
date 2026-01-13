@@ -8,14 +8,22 @@ import { CategorySelection } from './components/landing/CategorySelection';
 import { AgentSelection } from './components/landing/AgentSelection';
 import { LandingPage } from './components/landing/LandingPage';
 import { ConfirmationModal } from './components/ui/ConfirmationModal';
+import { ProjectsView } from './components/tasks/ProjectsView';
+import { BoardView } from './components/tasks/BoardView';
 import { Category, Agent, Conversation, Message, CreateConversationResponse } from './types';
 import { api } from './services/api';
 import { Navbar } from './components/layout/Navbar';
 import { ArrowLeft, LogOut } from 'lucide-react';
 import { IconButton } from './components/ui/IconButton';
 import { getCategoryConfig } from './config/categoryConfig';
+import { Settings, ArrowLeft, LogOut, Shield, ListTodo } from 'lucide-react';
+import { SettingsModal } from './components/settings/SettingsModal';
 
-type ViewState = 'categories' | 'agents' | 'chat' | 'admin';
+type ViewState = 'categories' | 'agents' | 'chat' | 'admin' | 'tasks' | 'board';
+
+// ... (existing code)
+
+
 
 function AppContent() {
   const { user, isLoading: authLoading, logout, isAuthenticated } = useAuth();
@@ -25,10 +33,12 @@ function AppContent() {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState<{
     isOpen: boolean;
     conversationToDelete?: { title: string; messageCount: number };
@@ -303,6 +313,38 @@ function AppContent() {
         />
         <CategorySelection categories={categories} onSelectCategory={handleSelectCategory} />
       </div>
+      <>
+        <div className="fixed top-4 right-4 z-50 flex gap-2">
+          <IconButton
+            icon={<ListTodo size={20} />}
+            onClick={() => setViewState('tasks')}
+            label="Tareas"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+          {user?.role === 'ADMIN' && (
+            <IconButton
+              icon={<Shield size={20} />}
+              onClick={() => setViewState('admin')}
+              label="Admin"
+              className="bg-white shadow-lg hover:bg-slate-100"
+            />
+          )}
+          <IconButton
+            icon={<Settings size={20} />}
+            onClick={() => setShowSettings(true)}
+            label="Configuración"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+          <IconButton
+            icon={<LogOut size={20} />}
+            onClick={logout}
+            label="Salir"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+        </div>
+        <CategorySelection categories={categories} onSelectCategory={handleSelectCategory} />
+        <SettingsModal isOpen={showSettings} onClose={() => setShowSettings(false)} />
+      </>
     );
   }
 
@@ -390,6 +432,45 @@ function AppContent() {
           type="warning"
         />
       </>
+    );
+  }
+
+  if (viewState === 'tasks') {
+    return (
+      <>
+        <div className="fixed top-4 right-4 z-50 flex gap-2">
+          <IconButton
+            icon={<ArrowLeft size={20} />}
+            onClick={() => setViewState('categories')}
+            label="Volver"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+          <IconButton
+            icon={<LogOut size={20} />}
+            onClick={logout}
+            label="Salir"
+            className="bg-white shadow-lg hover:bg-slate-100"
+          />
+        </div>
+        <ProjectsView
+          onSelectProject={(projectId) => {
+            setSelectedProjectId(projectId);
+            setViewState('board');
+          }}
+        />
+      </>
+    );
+  }
+
+  if (viewState === 'board' && selectedProjectId) {
+    return (
+      <BoardView
+        projectId={selectedProjectId}
+        onBack={() => {
+          setSelectedProjectId(null);
+          setViewState('tasks');
+        }}
+      />
     );
   }
 
