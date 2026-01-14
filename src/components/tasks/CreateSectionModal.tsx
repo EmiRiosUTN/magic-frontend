@@ -25,15 +25,15 @@ export function CreateSectionModal({ isOpen, onClose, onSubmit }: CreateSectionM
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
             <div className="bg-white rounded-xl shadow-2xl max-w-sm w-full">
                 <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h2 className="text-xl font-semibold text-slate-900">Nueva Sección</h2>
+                    <h2 className="text-lg font-semibold text-slate-900">Nueva sección</h2>
                     <button
                         onClick={handleClose}
                         className="text-slate-400 hover:text-slate-600 transition-colors"
                     >
-                        <X size={24} />
+                        <X size={16} />
                     </button>
                 </div>
 
@@ -46,25 +46,25 @@ export function CreateSectionModal({ isOpen, onClose, onSubmit }: CreateSectionM
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                            placeholder="Ej: Por hacer"
+                            className="w-full text-sm px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            placeholder="Ejemplo: Cosas para hacer"
                             maxLength={100}
                             required
                             autoFocus
                         />
                     </div>
 
-                    <div className="flex gap-3 pt-2">
+                    <div className="flex gap-3 pt-2 text-sm">
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
+                            className="flex-1 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-colors"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!name.trim()}
                         >
                             Crear

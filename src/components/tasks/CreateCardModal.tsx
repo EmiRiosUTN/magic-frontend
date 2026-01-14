@@ -61,10 +61,10 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
             <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
                 <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h2 className="text-xl font-semibold text-slate-900">Nueva Tarea</h2>
+                    <h2 className="text-lg font-medium text-slate-900">Nueva tarea</h2>
                     <button
                         onClick={handleClose}
                         className="text-slate-400 hover:text-slate-600 transition-colors"
@@ -82,8 +82,8 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                            placeholder="Ej: Implementar login"
+                            className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            placeholder="Ejemplo: Implementar login"
                             maxLength={200}
                             required
                             autoFocus
@@ -97,7 +97,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                            className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
                             placeholder="Describe la tarea..."
                             rows={3}
                             maxLength={5000}
@@ -115,8 +115,8 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                                     type="button"
                                     onClick={() => setPriority(p.value)}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${priority === p.value
-                                        ? `${p.color} ring-2 ring-offset-2 ring-slate-900`
-                                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                        ? `${p.color}`
+                                        : 'bg-gray-100 text-slate-700 hover:bg-gray-200'
                                         }`}
                                 >
                                     {p.label}
@@ -133,7 +133,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                             type="date"
                             value={dueDate}
                             onChange={(e) => setDueDate(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                         />
                     </div>
 
@@ -164,7 +164,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                                     <select
                                         value={reminderDaysBefore}
                                         onChange={(e) => setReminderDaysBefore(Number(e.target.value))}
-                                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                        className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                                     >
                                         <option value={0}>El mismo día</option>
                                         <option value={1}>1 día antes</option>
@@ -188,7 +188,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!title.trim()}
                         >
                             Crear

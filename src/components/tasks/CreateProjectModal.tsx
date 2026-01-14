@@ -39,11 +39,11 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
             <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
                 <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h2 className="text-xl font-semibold text-slate-900">
-                        {initialData ? 'Editar Proyecto' : 'Nuevo Proyecto'}
+                    <h2 className="text-lg font-medium text-slate-900">
+                        {initialData ? 'Editar proyecto' : 'Nuevo proyecto'}
                     </h2>
                     <button
                         onClick={handleClose}
@@ -62,7 +62,7 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                             placeholder="Ej: Desarrollo Web"
                             maxLength={100}
                             required
@@ -76,7 +76,7 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                            className="w-full px-4 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
                             placeholder="Describe tu proyecto..."
                             rows={3}
                             maxLength={1000}
@@ -102,17 +102,17 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                         </div>
                     </div>
 
-                    <div className="flex gap-3 pt-4">
+                    <div className="flex gap-3 pt-4 text-sm">
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
+                            className="flex-1 px-4 py-2 border border-slate-300 text-white bg-red-700 rounded-lg hover:bg-red-800 transition-colors"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!name.trim()}
                         >
                             {initialData ? 'Guardar' : 'Crear'}

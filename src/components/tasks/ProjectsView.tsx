@@ -46,17 +46,17 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
     const displayProjects = showArchived ? archivedProjects : activeProjects;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 font-roboto">
             <div className="max-w-7xl mx-auto px-6 py-8">
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-3xl font-bold text-slate-900 mb-2">Mis Proyectos</h1>
-                        <p className="text-slate-600">
+                        <h1 className="text-2xl font-semibold text-slate-900 mb-2">Mis proyectos</h1>
+                        <p className="text-slate-600 text-sm">
                             {activeProjects.length} {activeProjects.length === 1 ? 'proyecto activo' : 'proyectos activos'}
                         </p>
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex gap-3 text-sm">
                         <button
                             onClick={() => setShowArchived(!showArchived)}
                             className="px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2"
@@ -67,10 +67,10 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
 
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                            className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors flex items-center gap-2"
                         >
                             <Plus size={18} />
-                            Nuevo Proyecto
+                            Nuevo proyecto
                         </button>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
                                 className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
                             >
                                 <Plus size={20} />
-                                Crear Proyecto
+                                Crear proyecto
                             </button>
                         )}
                     </div>

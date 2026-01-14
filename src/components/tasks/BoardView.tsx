@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
     DndContext,
     DragEndEvent,
@@ -10,7 +10,6 @@ import {
     useSensors,
     closestCorners,
 } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
 import { ArrowLeft, Plus, Settings } from 'lucide-react';
 import { Project, Section, Card } from '../../types/tasks';
 import { SectionColumn } from './SectionColumn';
@@ -290,7 +289,7 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50">
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50 font-roboto">
             <div className="border-b border-slate-200 bg-white px-6 py-4">
                 <div className="flex items-center gap-4">
                     <button
@@ -316,10 +315,10 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
 
                     <button
                         onClick={() => setIsCreateSectionModalOpen(true)}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                        className="p-2 bg-slate-800 text-sm text-white rounded-lg hover:bg-slate-700 transition-colors flex items-center gap-1"
                     >
-                        <Plus size={18} />
-                        Nueva Sección
+                        <Plus size={14} className="text-white" />
+                        Nueva sección
                     </button>
                 </div>
             </div>
@@ -350,10 +349,10 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                                     <p className="text-slate-600 mb-4">No hay secciones en este proyecto</p>
                                     <button
                                         onClick={() => setIsCreateSectionModalOpen(true)}
-                                        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+                                        className="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-1"
                                     >
                                         <Plus size={20} />
-                                        Crear Primera Sección
+                                        Crear primera sección
                                     </button>
                                 </div>
                             </div>

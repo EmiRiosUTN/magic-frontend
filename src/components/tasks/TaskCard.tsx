@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Calendar, AlertCircle, Bell } from 'lucide-react';
@@ -47,13 +46,13 @@ export function TaskCard({ card, onClick }: TaskCardProps) {
             {...attributes}
             {...listeners}
             onClick={onClick}
-            className={`bg-white rounded-lg p-4 shadow-sm border border-slate-200 cursor-pointer hover:shadow-lg hover:border-blue-200 transition-all duration-200 ${isDragging ? 'opacity-50 shadow-2xl scale-105 rotate-3' : ''
+            className={`font-roboto bg-white rounded-lg p-4 shadow-sm border border-slate-200 cursor-pointer hover:shadow-lg hover:border-blue-200 transition-all duration-200 ${isDragging ? 'opacity-50 shadow-2xl scale-105 rotate-3' : ''
                 }`}
         >
-            <h4 className="font-medium text-slate-900 mb-2 line-clamp-2">{card.title}</h4>
+            <h4 className="font-medium text-sm text-slate-900 mb-2 line-clamp-2">{card.title}</h4>
 
             {card.description && (
-                <p className="text-sm text-slate-600 mb-3 line-clamp-2">{card.description}</p>
+                <p className="text-xs text-slate-600 mb-3 line-clamp-2">{card.description}</p>
             )}
 
             <div className="flex items-center gap-2 flex-wrap">

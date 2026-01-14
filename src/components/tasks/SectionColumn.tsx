@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Plus, Trash2, Edit2 } from 'lucide-react';
@@ -21,10 +20,10 @@ export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection
     const cards = section.cards || [];
 
     return (
-        <div className="flex-shrink-0 w-80 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-4 shadow-sm border border-slate-200">
+        <div className="font-roboto flex-shrink-0 w-80 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-4 shadow-sm border border-slate-200">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex-1">
-                    <h3 className="font-semibold text-slate-900 text-lg">{section.name}</h3>
+                    <h3 className="font-medium text-slate-900 text-md">{section.name}</h3>
                     <p className="text-sm text-slate-600">{cards.length} {cards.length === 1 ? 'tarea' : 'tareas'}</p>
                 </div>
                 <div className="flex gap-1">
@@ -47,7 +46,7 @@ export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection
 
             <button
                 onClick={onAddCard}
-                className="w-full mb-3 px-4 py-2.5 bg-white border-2 border-dashed border-slate-300 text-slate-600 rounded-lg hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all flex items-center justify-center gap-2 font-medium"
+                className="w-full mb-3 px-4 py-2.5 text-sm bg-white border-2 border-dashed border-slate-300 text-slate-600 rounded-lg hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50 transition-all flex items-center justify-center gap-2 font-medium"
             >
                 <Plus size={18} />
                 Agregar tarea

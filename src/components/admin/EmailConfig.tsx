@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { api } from '../../services/api';
 import { Save, Mail } from 'lucide-react';
 
@@ -11,7 +11,7 @@ export function EmailConfig() {
         fromEmail: '',
         fromName: 'MagicAI',
     });
-    const [isLoading, setIsLoading] = useState(false);
+    
     const [isSaving, setIsSaving] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
