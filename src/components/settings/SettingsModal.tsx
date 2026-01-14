@@ -4,6 +4,7 @@ import { Button } from '../ui/Button';
 import { Check, Mail, Globe } from 'lucide-react';
 import { api } from '../../services/api';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from '../../hooks/useTranslation';
 import { Language } from '../../types';
 
 interface SettingsModalProps {
@@ -12,7 +13,8 @@ interface SettingsModalProps {
 }
 
 export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
+  const { t } = useTranslation();
   const [notificationEmail, setNotificationEmail] = useState('');
   const [language, setLanguage] = useState<Language>('ES');
   const [saved, setSaved] = useState(false);
@@ -41,6 +43,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
       if (Object.keys(updates).length > 0) {
         await api.updateProfile(updates);
+        // Refresh user data to get updated language preference
+        await refreshUser();
       }
 
       setSaved(true);
@@ -49,27 +53,27 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
       }, 1000);
     } catch (error) {
       console.error('Error saving settings:', error);
-      alert('Error al guardar la configuración');
+      alert(t('errorSavingSettings'));
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Configuración">
+    <Modal isOpen={isOpen} onClose={onClose} title={t('settingsTitle')}>
       <div className="space-y-6">
         {/* Email Notifications Section */}
         <div>
           <h3 className="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
             <Mail size={16} />
-            Notificaciones
+            {t('notifications')}
           </h3>
           <p className="text-sm text-slate-600 mb-4">
-            Recibe recordatorios y alertas en esta dirección.
+            {t('notificationsDesc')}
           </p>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
-              Email de Notificaciones
+              {t('notificationEmail')}
             </label>
             <input
               type="email"
@@ -87,31 +91,31 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
         <div>
           <h3 className="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
             <Globe size={16} />
-            Idioma
+            {t('language')}
           </h3>
           <p className="text-sm text-slate-600 mb-4">
-            Selecciona tu idioma preferido para la interfaz.
+            {t('languageDesc')}
           </p>
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
               onClick={() => setLanguage('ES')}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'ES'
-                  ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
             >
-              🇪🇸 Español
+              🇪🇸 {t('spanish')}
             </button>
             <button
               type="button"
               onClick={() => setLanguage('EN')}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'EN'
-                  ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
-                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
             >
-              🇬🇧 English
+              🇬🇧 {t('english')}
             </button>
           </div>
         </div>
@@ -123,7 +127,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             onClick={onClose}
             disabled={isLoading || saved}
           >
-            Cancelar
+            {t('cancel')}
           </Button>
           <Button
             variant="primary"
@@ -134,10 +138,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
             {saved ? (
               <span className="flex items-center gap-2">
                 <Check size={16} />
-                Guardado
+                {t('saved')}
               </span>
             ) : (
-              isLoading ? 'Guardando...' : 'Guardar'
+              isLoading ? t('saving') : t('save')
             )}
           </Button>
         </div>

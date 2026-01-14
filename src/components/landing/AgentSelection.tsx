@@ -3,7 +3,7 @@ import { Agent, Category } from '../../types';
 import * as Icons from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
 import { IconButton } from '../ui/IconButton';
-import { getCategoryConfig } from '../../config/categoryConfig';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface AgentSelectionProps {
   category: Category;
@@ -12,13 +12,34 @@ interface AgentSelectionProps {
   onBack: () => void;
 }
 
+// Helper function to get complete Tailwind gradient class
+const getCategoryGradient = (icon: string) => {
+  const gradientMap: Record<string, string> = {
+    'Image': 'bg-gradient-to-br from-blue-700 to-blue-600',
+    'Pencil': 'bg-gradient-to-br from-green-700 to-green-600',
+    'Code': 'bg-gradient-to-br from-red-700 to-red-600',
+    'BarChart3': 'bg-gradient-to-br from-purple-700 to-purple-600',
+    'Smartphone': 'bg-gradient-to-br from-indigo-700 to-indigo-600',
+    'Video': 'bg-gradient-to-br from-teal-700 to-teal-600',
+  };
+  return gradientMap[icon] || 'bg-gradient-to-br from-slate-500 to-slate-400';
+};
+
 export const AgentSelection: React.FC<AgentSelectionProps> = ({
   category,
   agents,
   onSelectAgent,
   onBack,
 }) => {
-  const { icon: CategoryIcon } = getCategoryConfig(category.name);
+  const { t } = useTranslation();
+
+  // Get category icon from lucide-react
+  const CategoryIcon = Icons[category.icon as keyof typeof Icons] as React.ComponentType<{
+    size?: number;
+    className?: string;
+  }>;
+
+  const gradientClass = getCategoryGradient(category.icon);
 
   return (
     <div className="min-h-screen page-bg flex flex-col">
@@ -31,8 +52,8 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
               label="Volver"
               className="hover:bg-slate-200"
             />
-            <div className={`w-12 h-12 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center shadow-lg`}>
-              <CategoryIcon size={24} className="text-white" />
+            <div className={`w-12 h-12 ${gradientClass} rounded-xl flex items-center justify-center shadow-lg`}>
+              {CategoryIcon && <CategoryIcon size={24} className="text-white" />}
             </div>
             <div>
               <h1 className="text-2xl font-bold text-slate-900">{category.name}</h1>
@@ -46,7 +67,7 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="mb-8">
             <p className="text-slate-600">
-              Selecciona el agente especializado que mejor se ajuste a tu necesidad
+              {t('selectAgentDesc')}
             </p>
           </div>
 

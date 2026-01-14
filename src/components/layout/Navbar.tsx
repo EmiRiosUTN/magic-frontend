@@ -1,6 +1,7 @@
 import React from 'react';
 import { LogOut, Shield, ListTodo, Settings } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface NavbarProps {
     userRole?: string;
@@ -12,6 +13,7 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick, onLogoClick, onTasksClick, onSettingsClick }) => {
+    const { t } = useTranslation();
     return (
         <nav className="bg-white shadow-sm border-b border-slate-200 px-4 py-3 fixed top-0 left-0 w-full z-50 h-16">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -30,7 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick
                         className="text-slate-600 hover:text-slate-900"
                     >
                         <ListTodo size={20} className="mr-2" />
-                        Tareas
+                        {t('tasks')}
                     </Button>
                     {userRole === 'ADMIN' && (
                         <Button
@@ -39,7 +41,7 @@ export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick
                             className="text-slate-600 hover:text-slate-900"
                         >
                             <Shield size={20} className="mr-2" />
-                            Admin
+                            {t('admin')}
                         </Button>
                     )}
                     <Button
@@ -48,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick
                         className="text-slate-600 hover:text-slate-900"
                     >
                         <Settings size={20} className="mr-2" />
-                        Configuración
+                        {t('settings')}
                     </Button>
                     <div className="h-6 w-px bg-slate-200 mx-2" />
                     <Button
@@ -57,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick
                         className="text-slate-600 hover:text-slate-900"
                     >
                         <LogOut size={20} className="mr-2" />
-                        Salir
+                        {t('logout')}
                     </Button>
                 </div>
             </div>
