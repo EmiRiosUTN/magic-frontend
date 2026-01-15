@@ -1,18 +1,19 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Calendar, AlertCircle, Bell } from 'lucide-react';
+import { Calendar, Bell, Trash2 } from 'lucide-react';
 import { Card, Priority } from '../../types/tasks';
 
 interface TaskCardProps {
     card: Card;
     onClick: () => void;
+    onDelete: () => void;
 }
 
 const PRIORITY_STYLES = {
-    [Priority.LOW]: 'bg-green-100 text-green-800',
-    [Priority.MEDIUM]: 'bg-yellow-100 text-yellow-800',
-    [Priority.HIGH]: 'bg-orange-100 text-orange-800',
-    [Priority.URGENT]: 'bg-red-100 text-red-800',
+    [Priority.LOW]: 'bg-green-200 text-green-600',
+    [Priority.MEDIUM]: 'bg-orange-100 text-orange-600',
+    [Priority.HIGH]: 'bg-red-100 text-red-600',
+    [Priority.URGENT]: 'bg-red-200 text-red-900',
 };
 
 const PRIORITY_LABELS = {
@@ -22,7 +23,7 @@ const PRIORITY_LABELS = {
     [Priority.URGENT]: 'Urgente',
 };
 
-export function TaskCard({ card, onClick }: TaskCardProps) {
+export function TaskCard({ card, onClick, onDelete }: TaskCardProps) {
     const {
         attributes,
         listeners,
@@ -30,14 +31,28 @@ export function TaskCard({ card, onClick }: TaskCardProps) {
         transform,
         transition,
         isDragging,
-    } = useSortable({ id: card.id });
+    } = useSortable({
+        id: card.id,
+        data: {
+            type: 'card',
+            card,
+        },
+    });
 
     const style = {
         transform: CSS.Transform.toString(transform),
         transition,
     };
 
-    const isOverdue = card.dueDate && new Date(card.dueDate) < new Date();
+    if (isDragging) {
+        return (
+            <div
+                ref={setNodeRef}
+                style={style}
+                className="opacity-30 bg-slate-100 p-4 rounded-xl border-dashed border-2 border-slate-300 h-[120px]"
+            />
+        );
+    }
 
     return (
         <div
@@ -46,33 +61,54 @@ export function TaskCard({ card, onClick }: TaskCardProps) {
             {...attributes}
             {...listeners}
             onClick={onClick}
-            className={`font-roboto bg-white rounded-lg p-4 shadow-sm border border-slate-200 cursor-pointer hover:shadow-lg hover:border-blue-200 transition-all duration-200 ${isDragging ? 'opacity-50 shadow-2xl scale-105 rotate-3' : ''
-                }`}
+            className={`
+                group bg-white rounded-xl p-5 shadow-sm border border-slate-200 cursor-grab relative
+                hover:-translate-y-1 hover:shadow-md hover:border-blue-300
+                transition-all duration-200 ease-out
+                ${isDragging ? 'opacity-50 shadow-2xl scale-105 rotate-2' : ''}
+            `}
         >
-            <h4 className="font-medium text-sm text-slate-900 mb-2 line-clamp-2">{card.title}</h4>
+            <div className="flex items-start justify-between">
+                <h4 className="font-semibold text-sm text-slate-800 leading-tight line-clamp-2 pr-6">{card.title}</h4>
+                <button
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete();
+                    }}
+                    className="absolute top-4 right-4 text-slate-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200"
+                    title="Eliminar tarea"
+                >
+                    <Trash2 size={14} />
+                </button>
+            </div>
 
             {card.description && (
-                <p className="text-xs text-slate-600 mb-3 line-clamp-2">{card.description}</p>
+                <p className="text-sm text-slate-500 my-2 line-clamp-2">
+                    {card.description}
+                </p>
             )}
 
-            <div className="flex items-center gap-2 flex-wrap">
-                <span className={`text-xs px-2 py-1 rounded-full font-medium ${PRIORITY_STYLES[card.priority]}`}>
+            <div className="flex items-center justify-between mt-3">
+                <span className={`text-xs px-2.5 py-1 rounded-md font-semibold ${PRIORITY_STYLES[card.priority]}`}>
                     {PRIORITY_LABELS[card.priority]}
                 </span>
 
-                {card.reminderEnabled && card.dueDate && (
-                    <div className="flex items-center gap-1 text-xs text-blue-600" title={`Recordatorio ${card.reminderDaysBefore} día(s) antes`}>
-                        <Bell size={14} />
-                    </div>
-                )}
+                <div className="flex items-center gap-3 text-slate-400">
+                    {card.reminderEnabled && (
+                        <div className="text-blue-500" title="Recordatorio activo">
+                            <Bell size={14} />
+                        </div>
+                    )}
 
-                {card.dueDate && (
-                    <div className={`flex items-center gap-1 text-xs ${isOverdue ? 'text-red-600' : 'text-slate-600'}`}>
-                        {isOverdue && <AlertCircle size={14} />}
-                        <Calendar size={14} />
-                        <span>{new Date(card.dueDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}</span>
-                    </div>
-                )}
+                    {card.dueDate && (
+                        <div className={`flex items-center gap-1 text-xs ${new Date(card.dueDate) < new Date() ? 'text-red-500 font-medium' : ''
+                            }`}>
+                            <Calendar size={14} />
+                            <span>{new Date(card.dueDate).toLocaleDateString()}</span>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
