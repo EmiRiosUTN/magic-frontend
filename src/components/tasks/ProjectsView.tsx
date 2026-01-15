@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Archive, ArchiveRestore } from 'lucide-react';
 import { Project } from '../../types/tasks';
 import { ProjectCard } from './ProjectCard';

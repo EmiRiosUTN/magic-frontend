@@ -15,7 +15,7 @@ interface SectionColumnProps {
     onDeleteTask: (cardId: string) => void;
 }
 
-export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection, onEditSection, onDeleteTask }: SectionColumnProps) {
+export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection, onUpdateSection, onDeleteTask }: SectionColumnProps) {
     const { t } = useTranslation();
     const { setNodeRef } = useDroppable({
         id: section.id,
@@ -86,6 +86,9 @@ export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection
                             <Trash2 size={14} />
                         </button>
                     </div>
+
+                </div>
+
 
                 {/* Scrollable Tasks Area */}
                 <div className="flex-1 overflow-y-auto px-3 py-2 custom-scrollbar">

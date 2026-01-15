@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProjectsView } from '../../components/tasks/ProjectsView';
 import { IconButton } from '../../components/ui/IconButton';
@@ -8,7 +7,7 @@ export default function TasksPage() {
     const navigate = useNavigate();
     return (
         <div className="relative">
-            <div className="fixed top-20 right-4 z-50">
+            <div className="fixed top-20 left-4 z-50">
                 <IconButton
                     icon={<ArrowLeft size={20} />}
                     onClick={() => navigate('/')}

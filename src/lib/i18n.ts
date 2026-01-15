@@ -98,6 +98,20 @@ export const translations = {
         // Errors
         errorSavingSettings: 'Error al guardar la configuración',
         errorLoadingData: 'Error al cargar los datos',
+
+        // Colors
+        blue: 'Azul',
+        green: 'Verde',
+        purple: 'Púrpura',
+        orange: 'Naranja',
+        pink: 'Rosa',
+        teal: 'Teal',
+
+        // Create Project Modal
+        color: 'Color',
+        editProject: 'Editar Proyecto',
+        projectNamePlaceholder: 'Ej: Desarrollo Web',
+        projectDescriptionPlaceholder: 'Describe tu proyecto...',
     },
     en: {
         // Common
@@ -198,6 +212,20 @@ export const translations = {
         // Errors
         errorSavingSettings: 'Error saving settings',
         errorLoadingData: 'Error loading data',
+
+        // Colors
+        blue: 'Blue',
+        green: 'Green',
+        purple: 'Purple',
+        orange: 'Orange',
+        pink: 'Pink',
+        teal: 'Teal',
+
+        // Create Project Modal
+        color: 'Color',
+        editProject: 'Edit Project',
+        projectNamePlaceholder: 'Ex: Web Development',
+        projectDescriptionPlaceholder: 'Describe your project...',
     },
 };
 
