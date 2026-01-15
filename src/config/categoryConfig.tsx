@@ -16,43 +16,64 @@ export interface CategoryConfigItem {
     borderColor: string;
 }
 
+const imageConfig: CategoryConfigItem = {
+    icon: Image,
+    color: 'from-blue-700 to-blue-600',
+    textColor: 'text-blue-700',
+    borderColor: 'hover:border-blue-700 hover:border-t-4',
+};
+
+const writingConfig: CategoryConfigItem = {
+    icon: Pencil,
+    color: 'from-green-700 to-green-600',
+    textColor: 'text-green-700',
+    borderColor: 'hover:border-green-700 hover:border-t-4',
+};
+
+const codeConfig: CategoryConfigItem = {
+    icon: Code,
+    color: 'from-red-700 to-red-600',
+    textColor: 'text-red-700',
+    borderColor: 'hover:border-red-700 hover:border-t-4',
+};
+
+const dataConfig: CategoryConfigItem = {
+    icon: BarChart3,
+    color: 'from-purple-700 to-purple-600',
+    textColor: 'text-purple-700',
+    borderColor: 'hover:border-purple-700 hover:border-t-4',
+};
+
+const socialConfig: CategoryConfigItem = {
+    icon: Smartphone,
+    color: 'from-indigo-700 to-indigo-600',
+    textColor: 'text-indigo-700',
+    borderColor: 'hover:border-indigo-700 hover:border-t-4',
+};
+
+const videoConfig: CategoryConfigItem = {
+    icon: Video,
+    color: 'from-teal-700 to-teal-600',
+    textColor: 'text-teal-700',
+    borderColor: 'hover:border-teal-700 hover:border-t-4',
+};
+
 export const CATEGORY_CONFIG: Record<string, CategoryConfigItem> = {
-    'Creación de Imágenes': {
-        icon: Image,
-        color: 'from-blue-700 to-blue-600',
-        textColor: 'text-blue-700',
-        borderColor: 'hover:border-blue-700 hover:border-t-4',
-    },
-    'Redacción y Contenido': {
-        icon: Pencil,
-        color: 'from-green-700 to-green-600',
-        textColor: 'text-green-700',
-        borderColor: 'hover:border-green-700 hover:border-t-4',
-    },
-    'Desarrollo y Código': {
-        icon: Code,
-        color: 'from-red-700 to-red-600',
-        textColor: 'text-red-700',
-        borderColor: 'hover:border-red-700 hover:border-t-4',
-    },
-    'Análisis de Datos': {
-        icon: BarChart3,
-        color: 'from-purple-700 to-purple-600',
-        textColor: 'text-purple-700',
-        borderColor: 'hover:border-purple-700 hover:border-t-4',
-    },
-    'Redes Sociales': {
-        icon: Smartphone,
-        color: 'from-indigo-700 to-indigo-600',
-        textColor: 'text-indigo-700',
-        borderColor: 'hover:border-indigo-700 hover:border-t-4',
-    },
-    'Video y Multimedia': {
-        icon: Video,
-        color: 'from-teal-700 to-teal-600',
-        textColor: 'text-teal-700',
-        borderColor: 'hover:border-teal-700 hover:border-t-4',
-    },
+    // Es
+    'Creación de Imágenes': imageConfig,
+    'Redacción y Contenido': writingConfig,
+    'Desarrollo y Código': codeConfig,
+    'Análisis de Datos': dataConfig,
+    'Redes Sociales': socialConfig,
+    'Video y Multimedia': videoConfig,
+
+    // En
+    'Image Creation': imageConfig,
+    'Writing and Content': writingConfig,
+    'Development and Code': codeConfig,
+    'Data Analysis': dataConfig,
+    'Social Media': socialConfig,
+    'Video and Multimedia': videoConfig,
 };
 
 export const DEFAULT_CATEGORY_CONFIG: CategoryConfigItem = {

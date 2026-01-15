@@ -182,13 +182,13 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
+                            className="flex-1 px-4 py-2 text-sm border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 px-4 py-2 text-sm bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!title.trim()}
                         >
                             Crear

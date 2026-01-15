@@ -19,6 +19,7 @@ import { EditSectionModal } from './EditSectionModal';
 import { CreateCardModal } from './CreateCardModal';
 import { EditCardModal } from './EditCardModal';
 import { api } from '../../services/api';
+import { AlertDialog } from '../ui/alert-dialog';
 
 interface BoardViewProps {
     projectId: string;
@@ -34,7 +35,9 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
     const [createCardSectionId, setCreateCardSectionId] = useState<string | null>(null);
     const [editingCard, setEditingCard] = useState<Card | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [sectionToDelete, setSectionToDelete] = useState<string | null>(null);
     const [activeDragItem, setActiveDragItem] = useState<{ sectionId: string; index: number } | null>(null);
+    const [taskToDelete, setTaskToDelete] = useState<string | null>(null);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -72,9 +75,6 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
     };
 
     const handleDeleteSection = async (sectionId: string) => {
-        if (!confirm('¿Estás seguro de que quieres eliminar esta sección y todas sus tareas?')) {
-            return;
-        }
         try {
             await api.deleteSection(sectionId);
             await loadProject();
@@ -166,7 +166,6 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
             const activeCards = activeSection.cards || [];
             const overCards = overSection.cards || [];
 
-            const activeIndex = activeCards.findIndex(c => c.id === activeId);
             const overIndex = overCard ? overCards.findIndex(c => c.id === overId) : overCards.length;
 
             return sections.map(section => {
@@ -289,41 +288,44 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50 font-roboto">
-            <div className="border-b border-slate-200 bg-white px-6 py-4">
-                <div className="flex items-center gap-4">
+        <div className="min-h-screen page-bg font-roboto flex flex-col">
+            {/* Header */}
+            <div className="border-b border-slate-200/60 bg-white/80 backdrop-blur-sm sticky top-0 z-10 px-8 py-5">
+                <div className="flex items-center gap-5 max-w-[1800px] mx-auto">
                     <button
                         onClick={onBack}
-                        className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+                        className="p-2.5 hover:bg-slate-100 rounded-xl transition-all text-slate-500 hover:text-slate-800"
+                        title="Volver al dashboard"
                     >
-                        <ArrowLeft size={20} />
+                        <ArrowLeft size={22} />
                     </button>
 
                     <div
-                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ring-1 ring-slate-900/5"
                         style={{ backgroundColor: project.color || '#3B82F6' }}
                     >
-                        <Settings className="text-white" size={20} />
+                        <Settings className="text-white" size={24} />
                     </div>
 
                     <div className="flex-1">
-                        <h1 className="text-xl font-semibold text-slate-900">{project.name}</h1>
+                        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">{project.name}</h1>
                         {project.description && (
-                            <p className="text-sm text-slate-600">{project.description}</p>
+                            <p className="text-sm text-slate-500 mt-0.5 font-medium">{project.description}</p>
                         )}
                     </div>
 
                     <button
                         onClick={() => setIsCreateSectionModalOpen(true)}
-                        className="p-2 bg-slate-800 text-sm text-white rounded-lg hover:bg-slate-700 transition-colors flex items-center gap-1"
+                        className="px-4 py-2.5 bg-slate-900 text-sm font-medium text-white rounded-xl hover:bg-slate-800 
+                        transition-all shadow-sm hover:shadow-md flex items-center gap-2 active:scale-95"
                     >
-                        <Plus size={14} className="text-white" />
+                        <Plus size={18} className="text-white" />
                         Nueva sección
                     </button>
                 </div>
             </div>
 
-            <div className="p-6 overflow-x-auto bg-gradient-to-br from-slate-100/50 to-transparent">
+            <div className="flex-1 overflow-x-auto overflow-y-hidden p-8">
                 <DndContext
                     sensors={sensors}
                     collisionDetection={closestCorners}
@@ -331,15 +333,16 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                     onDragOver={handleDragOver}
                     onDragEnd={handleDragEnd}
                 >
-                    <div className="flex gap-4 pb-4">
+                    <div className="flex gap-8 h-full max-w-[1800px] mx-auto pb-4">
                         {sections.map((section) => (
                             <SectionColumn
                                 key={section.id}
                                 section={section}
                                 onAddCard={() => setCreateCardSectionId(section.id)}
                                 onCardClick={handleCardClick}
-                                onDeleteSection={() => handleDeleteSection(section.id)}
-                                onEditSection={() => setEditingSectionId(section.id)}
+                                onUpdateSection={(name: string) => handleUpdateSection(section.id, name)}
+                                onDeleteSection={() => setSectionToDelete(section.id)}
+                                onDeleteTask={(cardId) => setTaskToDelete(cardId)}
                             />
                         ))}
 
@@ -360,7 +363,7 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                     </div>
 
                     <DragOverlay>
-                        {activeCard ? <TaskCard card={activeCard} onClick={() => { }} /> : null}
+                        {activeCard ? <TaskCard card={activeCard} onClick={() => { }} onDelete={() => { }} /> : null}
                     </DragOverlay>
                 </DndContext>
             </div>
@@ -394,13 +397,39 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                     isOpen={true}
                     onClose={() => setEditingCard(null)}
                     onSubmit={(data) => handleUpdateCard(editingCard.id, data)}
-                    onDelete={() => {
-                        handleDeleteCard(editingCard.id);
-                        setEditingCard(null);
-                    }}
                     card={editingCard}
                 />
             )}
+
+            <AlertDialog
+                open={!!sectionToDelete}
+                onOpenChange={() => setSectionToDelete(null)}
+                title="¿Eliminar sección?"
+                description="Se eliminarán todas las tareas contenidas en esta sección. Esta acción no se puede deshacer."
+                onConfirm={() => {
+                    if (sectionToDelete) {
+                        handleDeleteSection(sectionToDelete);
+                        setSectionToDelete(null); // Ensure it closes immediately/cleans up
+                    }
+                }}
+                confirmText="Eliminar"
+                variant="destructive"
+            />
+
+            <AlertDialog
+                open={!!taskToDelete}
+                onOpenChange={() => setTaskToDelete(null)}
+                title="¿Eliminar tarea?"
+                description="Esta acción no se puede deshacer. La tarea será eliminada permanentemente"
+                onConfirm={() => {
+                    if (taskToDelete) {
+                        handleDeleteCard(taskToDelete);
+                        setTaskToDelete(null);
+                    }
+                }}
+                confirmText="Eliminar"
+                variant="destructive"
+            />
         </div>
     );
 }
