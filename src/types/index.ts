@@ -34,6 +34,8 @@ export interface Category {
   displayOrder: number;
   agentCount?: number;
   color: string;
+  textColor: string;
+  borderColor: string;
 }
 
 export interface Agent {

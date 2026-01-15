@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { Priority } from '../../types/tasks';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface CreateCardModalProps {
     isOpen: boolean;
@@ -15,14 +16,16 @@ interface CreateCardModalProps {
     }) => void;
 }
 
-const PRIORITIES = [
-    { value: Priority.LOW, label: 'Baja', color: 'bg-green-100 text-green-800' },
-    { value: Priority.MEDIUM, label: 'Media', color: 'bg-yellow-100 text-yellow-800' },
-    { value: Priority.HIGH, label: 'Alta', color: 'bg-orange-100 text-orange-800' },
-    { value: Priority.URGENT, label: 'Urgente', color: 'bg-red-100 text-red-800' },
-];
+
 
 export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalProps) {
+    const { t } = useTranslation();
+    const PRIORITIES = [
+        { value: Priority.LOW, label: t('low'), color: 'bg-green-100 text-green-800' },
+        { value: Priority.MEDIUM, label: t('medium'), color: 'bg-yellow-100 text-yellow-800' },
+        { value: Priority.HIGH, label: t('high'), color: 'bg-orange-100 text-orange-800' },
+        { value: Priority.URGENT, label: t('urgent'), color: 'bg-red-100 text-red-800' },
+    ];
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [priority, setPriority] = useState<Priority>(Priority.MEDIUM);
@@ -64,7 +67,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
             <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
                 <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h2 className="text-lg font-medium text-slate-900">Nueva tarea</h2>
+                    <h2 className="text-lg font-medium text-slate-900">{t('addTask')}</h2>
                     <button
                         onClick={handleClose}
                         className="text-slate-400 hover:text-slate-600 transition-colors"
@@ -76,7 +79,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Título *
+                            {t('taskTitle')} *
                         </label>
                         <input
                             type="text"
@@ -92,7 +95,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Descripción
+                            {t('taskDescription')}
                         </label>
                         <textarea
                             value={description}
@@ -106,7 +109,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Prioridad
+                            {t('priority')}
                         </label>
                         <div className="grid grid-cols-2 gap-2">
                             {PRIORITIES.map((p) => (
@@ -127,7 +130,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
 
                     <div>
                         <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Fecha de vencimiento
+                            {t('dueDate')}
                         </label>
                         <input
                             type="date"
@@ -184,14 +187,14 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                             onClick={handleClose}
                             className="flex-1 px-4 py-2 text-sm border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
                         >
-                            Cancelar
+                            {t('cancel')}
                         </button>
                         <button
                             type="submit"
                             className="flex-1 px-4 py-2 text-sm bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!title.trim()}
                         >
-                            Crear
+                            {t('create')}
                         </button>
                     </div>
                 </form>

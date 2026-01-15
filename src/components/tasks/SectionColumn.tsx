@@ -4,6 +4,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { Plus, Trash2 } from 'lucide-react';
 import { Section } from '../../types/tasks';
 import { TaskCard } from './TaskCard';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface SectionColumnProps {
     section: Section;
@@ -14,7 +15,8 @@ interface SectionColumnProps {
     onDeleteTask: (cardId: string) => void;
 }
 
-export function SectionColumn({ section, onAddCard, onCardClick, onUpdateSection, onDeleteSection, onDeleteTask }: SectionColumnProps) {
+export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection, onEditSection, onDeleteTask }: SectionColumnProps) {
+    const { t } = useTranslation();
     const { setNodeRef } = useDroppable({
         id: section.id,
         data: { type: 'section', section }
@@ -72,7 +74,7 @@ export function SectionColumn({ section, onAddCard, onCardClick, onUpdateSection
                             </h3>
                         )}
                         <span className="text-xs font-medium text-slate-400 bg-slate-200/60 px-2 py-0.5 rounded-full flex-shrink-0">
-                            {cards.length}
+                            {cards.length} {cards.length === 1 ? t('task') : t('tasksCount')}
                         </span>
                     </div>
                     <div className="flex gap-1">
@@ -84,7 +86,6 @@ export function SectionColumn({ section, onAddCard, onCardClick, onUpdateSection
                             <Trash2 size={14} />
                         </button>
                     </div>
-                </div>
 
                 {/* Scrollable Tasks Area */}
                 <div className="flex-1 overflow-y-auto px-3 py-2 custom-scrollbar">

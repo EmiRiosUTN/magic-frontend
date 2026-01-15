@@ -1,6 +1,7 @@
 import React from 'react';
 import { FolderKanban, Calendar, Archive } from 'lucide-react';
 import { Project } from '../../types/tasks';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface ProjectCardProps {
     project: Project;
@@ -8,6 +9,7 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, onClick }: ProjectCardProps) {
+    const { t } = useTranslation();
     const sectionCount = project.sections?.length || 0;
     const cardCount = project.sections?.reduce((acc, section) => acc + (section.cards?.length || 0), 0) || 0;
 
@@ -42,20 +44,20 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
                     <div className="flex items-center gap-4 text-sm text-slate-600">
                         <div className="flex items-center gap-1">
                             <FolderKanban size={16} />
-                            <span>{sectionCount} {sectionCount === 1 ? 'sección' : 'secciones'}</span>
+                            <span>{sectionCount} {sectionCount === 1 ? t('section') : t('sections')}</span>
                         </div>
                         <div className="flex items-center gap-1">
                             <Calendar size={16} />
-                            <span>{cardCount} {cardCount === 1 ? 'tarea' : 'tareas'}</span>
+                            <span>{cardCount} {cardCount === 1 ? t('task') : t('tasksCount')}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                <span>Creado {new Date(project.createdAt).toLocaleDateString('es-ES')}</span>
+                <span>{t('created')} {new Date(project.createdAt).toLocaleDateString('es-ES')}</span>
                 <span className="text-blue-600 group-hover:text-blue-700 font-medium">
-                    Ver tablero →
+                    {t('viewBoard')} →
                 </span>
             </div>
         </div>

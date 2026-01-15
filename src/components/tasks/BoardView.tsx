@@ -20,6 +20,7 @@ import { CreateCardModal } from './CreateCardModal';
 import { EditCardModal } from './EditCardModal';
 import { api } from '../../services/api';
 import { AlertDialog } from '../ui/alert-dialog';
+import { useTranslation } from '../../hooks/useTranslation';
 
 interface BoardViewProps {
     projectId: string;
@@ -27,6 +28,7 @@ interface BoardViewProps {
 }
 
 export function BoardView({ projectId, onBack }: BoardViewProps) {
+    const { t } = useTranslation();
     const [project, setProject] = useState<Project | null>(null);
     const [sections, setSections] = useState<Section[]>([]);
     const [activeCard, setActiveCard] = useState<Card | null>(null);
@@ -320,7 +322,7 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                         transition-all shadow-sm hover:shadow-md flex items-center gap-2 active:scale-95"
                     >
                         <Plus size={18} className="text-white" />
-                        Nueva sección
+                        {t('newSection')}
                     </button>
                 </div>
             </div>
@@ -349,13 +351,13 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                         {sections.length === 0 && (
                             <div className="flex items-center justify-center w-full py-20">
                                 <div className="text-center">
-                                    <p className="text-slate-600 mb-4">No hay secciones en este proyecto</p>
+                                    <p className="text-slate-600 mb-4">{t('noSectionsInProject')}</p>
                                     <button
                                         onClick={() => setIsCreateSectionModalOpen(true)}
                                         className="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-1"
                                     >
                                         <Plus size={20} />
-                                        Crear primera sección
+                                        {t('createFirstSection')}
                                     </button>
                                 </div>
                             </div>
