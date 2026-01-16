@@ -48,12 +48,12 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
     const displayProjects = showArchived ? archivedProjects : activeProjects;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 font-roboto">
+        <div className="min-h-screen bg-grafite font-roboto">
             <div className="max-w-7xl mx-auto px-6 py-8">
                 <div className="flex items-center justify-between mb-8">
                     <div>
-                        <h1 className="text-2xl font-semibold text-slate-900 mb-2">{t('myProjects')}</h1>
-                        <p className="text-slate-600 text-sm">
+                        <h1 className="text-2xl font-semibold text-swirl mb-2">{t('myProjects')}</h1>
+                        <p className="text-oyster text-sm">
                             {activeProjects.length} {activeProjects.length === 1 ? t('project') : t('projects').toLowerCase()} {activeProjects.length === 1 ? 'activo' : t('activeProjects')}
                         </p>
                     </div>
@@ -61,7 +61,7 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
                     <div className="flex gap-3 text-sm">
                         <button
                             onClick={() => setShowArchived(!showArchived)}
-                            className="px-4 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-2"
+                            className="px-4 py-2 bg-plum text-oyster rounded-lg hover:bg-plum/80 transition-colors flex items-center gap-2"
                         >
                             {showArchived ? <ArchiveRestore size={18} /> : <Archive size={18} />}
                             {showArchived ? 'Ver activos' : t('viewArchived')}
@@ -69,7 +69,7 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
 
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors flex items-center gap-2"
+                            className="px-4 py-2 bg-navy text-oyster rounded-lg hover:bg-navy/80 transition-colors flex items-center gap-2"
                         >
                             <Plus size={18} />
                             {t('newProject')}
@@ -97,7 +97,7 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
                         {!showArchived && (
                             <button
                                 onClick={() => setIsCreateModalOpen(true)}
-                                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+                                className="px-6 py-3 bg-navy text-white rounded-lg hover:bg-navy/80 transition-colors inline-flex items-center gap-2"
                             >
                                 <Plus size={20} />
                                 {t('create')} {t('project')}

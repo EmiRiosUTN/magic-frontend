@@ -16,12 +16,9 @@ export default function AgentsPage() {
         const loadData = async () => {
             if (!categoryId) return;
             try {
-                // Fetch agents
-                const agentsResponse: any = await api.getAgentsByCategory(categoryId);
+               const agentsResponse: any = await api.getAgentsByCategory(categoryId);
                 setAgents(agentsResponse.agents || []);
 
-                // Fetch category details (we might need an endpoint or filter from all categories)
-                // For now, re-fetching all categories to find the current one to ensure we have the color config
                 const catsResponse: any = await api.getCategories();
                 const foundCat = (catsResponse.categories || []).find((c: any) => c.id === categoryId);
                 if (foundCat) {

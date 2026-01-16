@@ -15,7 +15,6 @@ import { Project, Section, Card } from '../../types/tasks';
 import { SectionColumn } from './SectionColumn';
 import { TaskCard } from './TaskCard';
 import { CreateSectionModal } from './CreateSectionModal';
-import { EditSectionModal } from './EditSectionModal';
 import { CreateCardModal } from './CreateCardModal';
 import { EditCardModal } from './EditCardModal';
 import { api } from '../../services/api';
@@ -33,7 +32,6 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
     const [sections, setSections] = useState<Section[]>([]);
     const [activeCard, setActiveCard] = useState<Card | null>(null);
     const [isCreateSectionModalOpen, setIsCreateSectionModalOpen] = useState(false);
-    const [editingSectionId, setEditingSectionId] = useState<string | null>(null);
     const [createCardSectionId, setCreateCardSectionId] = useState<string | null>(null);
     const [editingCard, setEditingCard] = useState<Card | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -290,9 +288,9 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
     }
 
     return (
-        <div className="min-h-screen page-bg font-roboto flex flex-col">
+        <div className="min-h-screen bg-grafite font-roboto flex flex-col">
             {/* Header */}
-            <div className="border-b border-slate-200/60 bg-white/80 backdrop-blur-sm sticky top-0 z-10 px-8 py-5">
+            <div className="sticky top-0 z-10 px-8 py-5">
                 <div className="flex items-center gap-5 max-w-[1800px] mx-auto">
                     <button
                         onClick={onBack}
@@ -306,22 +304,22 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                         className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm ring-1 ring-slate-900/5"
                         style={{ backgroundColor: project.color || '#3B82F6' }}
                     >
-                        <Settings className="text-white" size={24} />
+                        <Settings className="text-oyster" size={24} />
                     </div>
 
                     <div className="flex-1">
-                        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">{project.name}</h1>
+                        <h1 className="text-2xl font-bold text-swirl tracking-tight">{project.name}</h1>
                         {project.description && (
-                            <p className="text-sm text-slate-500 mt-0.5 font-medium">{project.description}</p>
+                            <p className="text-sm text-oyster mt-0.5 font-medium">{project.description}</p>
                         )}
                     </div>
 
                     <button
                         onClick={() => setIsCreateSectionModalOpen(true)}
-                        className="px-4 py-2.5 bg-slate-900 text-sm font-medium text-white rounded-xl hover:bg-slate-800 
+                        className="px-4 py-2.5 bg-plum text-sm font-medium text-oyster rounded-xl hover:bg-plum/80 
                         transition-all shadow-sm hover:shadow-md flex items-center gap-2 active:scale-95"
                     >
-                        <Plus size={18} className="text-white" />
+                        <Plus size={18} className="text-oyster" />
                         {t('newSection')}
                     </button>
                 </div>
@@ -351,10 +349,10 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                         {sections.length === 0 && (
                             <div className="flex items-center justify-center w-full py-20">
                                 <div className="text-center">
-                                    <p className="text-slate-600 mb-4">{t('noSectionsInProject')}</p>
+                                    <p className="text-oyster mb-4">{t('noSectionsInProject')}</p>
                                     <button
                                         onClick={() => setIsCreateSectionModalOpen(true)}
-                                        className="px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center gap-1"
+                                        className="px-4 py-2 bg-plum text-oyster rounded-lg hover:bg-plum/80 transition-colors inline-flex items-center gap-1"
                                     >
                                         <Plus size={20} />
                                         {t('createFirstSection')}
@@ -375,18 +373,6 @@ export function BoardView({ projectId, onBack }: BoardViewProps) {
                 onClose={() => setIsCreateSectionModalOpen(false)}
                 onSubmit={handleCreateSection}
             />
-
-            {editingSectionId && (
-                <EditSectionModal
-                    isOpen={true}
-                    onClose={() => setEditingSectionId(null)}
-                    onSubmit={(name) => {
-                        handleUpdateSection(editingSectionId, name);
-                        setEditingSectionId(null);
-                    }}
-                    currentName={sections.find(s => s.id === editingSectionId)?.name || ''}
-                />
-            )}
 
             <CreateCardModal
                 isOpen={createCardSectionId !== null}

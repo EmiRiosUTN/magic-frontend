@@ -50,7 +50,7 @@ export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection
 
     return (
         <div className="font-roboto flex-shrink-0 w-80 h-full max-h-full pb-2">
-            <div className="bg-slate-50 rounded-2xl border border-slate-200 flex flex-col h-full max-h-full shadow-sm">
+            <div className="bg-neutral-900 rounded-2xl flex flex-col h-full max-h-full shadow-sm">
                 {/* Header */}
                 <div className="p-4 pb-2 flex items-center justify-between">
                     <div className="flex items-center gap-2 flex-1 mr-2">
@@ -62,25 +62,25 @@ export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection
                                 onChange={(e) => setTitle(e.target.value)}
                                 onBlur={handleSubmit}
                                 onKeyDown={handleKeyDown}
-                                className="font-bold text-lg text-slate-800 bg-white border-2 border-blue-500 rounded px-1.5 py-0.5 w-full outline-none"
+                                className="font-medium text-lg text-swirl bg-neutral-800 ring-1 ring-plum rounded px-1.5 py-0.5 w-full outline-none"
                             />
                         ) : (
                             <h3
                                 onClick={() => setIsEditing(true)}
-                                className="font-bold text-slate-800 text-lg cursor-text hover:bg-slate-200/50 rounded px-1.5 py-0.5 transition-colors truncate"
+                                className="font-medium text-swirl text-lg cursor-text hover:bg-neutral-800/50 rounded px-1.5 py-0.5 transition-colors truncate"
                                 title="Click para editar"
                             >
                                 {section.name}
                             </h3>
                         )}
-                        <span className="text-xs font-medium text-slate-400 bg-slate-200/60 px-2 py-0.5 rounded-full flex-shrink-0">
+                        <span className="text-xs font-medium text-oyster bg-plum px-2 py-0.5 rounded-full flex-shrink-0">
                             {cards.length} {cards.length === 1 ? t('task') : t('tasksCount')}
                         </span>
                     </div>
                     <div className="flex gap-1">
                         <button
                             onClick={onDeleteSection}
-                            className="text-slate-400 hover:text-red-600 transition-colors p-1.5 hover:bg-white rounded-md"
+                            className="text-oyster hover:text-plum transition-colors p-1.5 hover:bg-transparent rounded-md"
                             title="Eliminar sección"
                         >
                             <Trash2 size={14} />
@@ -113,12 +113,12 @@ export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection
                 <div className="p-3 pt-0">
                     <button
                         onClick={onAddCard}
-                        className="w-full py-2.5 px-4 rounded-xl border-2 border-dashed border-slate-300 text-slate-500 
-                        hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50/50 
-                        transition-all duration-200 flex items-center justify-center gap-2 font-medium text-sm group bg-white/50"
+                        className="w-full py-2.5 px-4 rounded-xl border-2 border-dashed border-plum text-plum 
+                        hover:border-plum/80 hover:text-plum/80 hover:bg-neutral-700
+                        transition-all duration-200 flex items-center justify-center gap-2 font-medium text-sm group bg-neutral-600"
                     >
-                        <div className="bg-slate-200 group-hover:bg-blue-200 rounded p-0.5 transition-colors">
-                            <Plus size={14} className="text-slate-500 group-hover:text-blue-600" />
+                        <div className="bg-plum group-hover:bg-plum/80 rounded p-0.5 transition-colors">
+                            <Plus size={14} className="text-swirl" />
                         </div>
                         Agregar tarea
                     </button>

@@ -29,16 +29,17 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col">
-        <div className="flex items-center justify-between p-6 border-b border-slate-200">
-          <h2 className="text-xl font-semibold text-slate-900">{title}</h2>
+      <div className="relative bg-grafite rounded-2xl shadow-xl max-w-md w-full mx-4 max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="flex items-center justify-between p-6 border-b border-smoke">
+          <h2 className="text-xl font-semibold text-swirl">{title}</h2>
           <IconButton
             icon={<X size={20} />}
             onClick={onClose}
-            label="Close"
+            label="Cerrar"
+            className="text-swirl"
           />
         </div>
-        <div className="p-6 overflow-y-auto">
+        <div className="p-6 overflow-y-auto text-swirl">
           {children}
         </div>
       </div>

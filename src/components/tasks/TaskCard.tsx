@@ -62,21 +62,21 @@ export function TaskCard({ card, onClick, onDelete }: TaskCardProps) {
             {...listeners}
             onClick={onClick}
             className={`
-                group bg-white rounded-xl p-5 shadow-sm border border-slate-200 cursor-grab relative
-                hover:-translate-y-1 hover:shadow-md hover:border-blue-300
+                group bg-grafite rounded-xl p-5 shadow-sm cursor-grab relative
+                hover:-translate-y-1 hover:shadow-md 
                 transition-all duration-200 ease-out
                 ${isDragging ? 'opacity-50 shadow-2xl scale-105 rotate-2' : ''}
             `}
         >
             <div className="flex items-start justify-between">
-                <h4 className="font-semibold text-sm text-slate-800 leading-tight line-clamp-2 pr-6">{card.title}</h4>
+                <h4 className="font-medium text-sm text-swirl leading-tight line-clamp-2 pr-6">{card.title}</h4>
                 <button
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={(e) => {
                         e.stopPropagation();
                         onDelete();
                     }}
-                    className="absolute top-4 right-4 text-slate-400 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200"
+                    className="absolute top-4 right-4 text-oyster hover:text-plum p-1.5 hover:bg-transparent rounded-md opacity-0 group-hover:opacity-100 transition-all duration-200"
                     title="Eliminar tarea"
                 >
                     <Trash2 size={14} />
@@ -84,7 +84,7 @@ export function TaskCard({ card, onClick, onDelete }: TaskCardProps) {
             </div>
 
             {card.description && (
-                <p className="text-sm text-slate-500 my-2 line-clamp-2">
+                <p className="text-sm text-swirl my-2 line-clamp-2">
                     {card.description}
                 </p>
             )}
@@ -96,13 +96,13 @@ export function TaskCard({ card, onClick, onDelete }: TaskCardProps) {
 
                 <div className="flex items-center gap-3 text-slate-400">
                     {card.reminderEnabled && (
-                        <div className="text-blue-500" title="Recordatorio activo">
+                        <div className="text-copper" title="Recordatorio activo">
                             <Bell size={14} />
                         </div>
                     )}
 
                     {card.dueDate && (
-                        <div className={`flex items-center gap-1 text-xs ${new Date(card.dueDate) < new Date() ? 'text-red-500 font-medium' : ''
+                        <div className={`flex items-center gap-1 text-xs ${new Date(card.dueDate) < new Date() ? 'text-swirl font-medium' : ''
                             }`}>
                             <Calendar size={14} />
                             <span>{new Date(card.dueDate).toLocaleDateString()}</span>

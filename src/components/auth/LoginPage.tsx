@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navbar } from '../layout/Navbar';
 import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -25,14 +26,15 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-b from-grafite via-[#3d2d37] to-[#4a3a44] flex items-center justify-center p-6 pt-24">
+      <Navbar />
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-200">
+        <div className="bg-grafite rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
+            <h1 className="text-3xl font-light text-plum mb-2 font-inter">
               MagicAI Platform
             </h1>
-            <p className="text-slate-600">
+            <p className="text-nevada font-roboto">
               Inicia sesión para continuar
             </p>
           </div>
@@ -45,7 +47,7 @@ export const LoginPage: React.FC = () => {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-swirl mb-2">
                 Email
               </label>
               <Input
@@ -60,7 +62,7 @@ export const LoginPage: React.FC = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-swirl mb-2">
                 Contraseña
               </label>
               <Input
@@ -76,14 +78,14 @@ export const LoginPage: React.FC = () => {
 
             <Button
               type="submit"
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white"
+              className="w-full bg-plum hover:bg-plum/80 text-swirl"
               disabled={isLoading}
             >
               {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
             </Button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-slate-600">
+          <div className="mt-6 text-center text-sm text-swirl">
             <p>Usuario admin de prueba:</p>
             <p className="font-mono text-xs mt-1">admin@magicai.com / admin123</p>
           </div>

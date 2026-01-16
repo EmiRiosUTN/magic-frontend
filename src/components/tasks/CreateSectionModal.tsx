@@ -28,12 +28,12 @@ export function CreateSectionModal({ isOpen, onClose, onSubmit }: CreateSectionM
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
-            <div className="bg-white rounded-xl shadow-2xl max-w-sm w-full">
-                <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h2 className="text-lg font-semibold text-slate-900">{t('newSection')}</h2>
+            <div className="bg-grafite rounded-xl shadow-2xl max-w-sm w-full">
+                <div className="flex items-center justify-between p-6 border-b border-smoke">
+                    <h2 className="text-lg font-semibold text-swirl">{t('newSection')}</h2>
                     <button
                         onClick={handleClose}
-                        className="text-slate-400 hover:text-slate-600 transition-colors"
+                        className="text-swirl hover:cursor-pointer transition-colors"
                     >
                         <X size={16} />
                     </button>
@@ -41,7 +41,7 @@ export function CreateSectionModal({ isOpen, onClose, onSubmit }: CreateSectionM
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('sectionName')} *
                         </label>
                         <input
@@ -60,13 +60,13 @@ export function CreateSectionModal({ isOpen, onClose, onSubmit }: CreateSectionM
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="flex-1 py-2 bg-red-700 text-white rounded-lg hover:bg-red-800 transition-colors"
+                            className="flex-1 py-2 text-swirl bg-oxid rounded-lg hover:bg-oxid/80 transition-colors"
                         >
                             {t('cancel')}
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 py-2 bg-navy text-swirl rounded-lg hover:bg-navy/80 hover:cursor-pointer transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!name.trim()}
                         >
                             {t('create')}
