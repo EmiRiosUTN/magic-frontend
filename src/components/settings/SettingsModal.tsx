@@ -80,12 +80,12 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               value={notificationEmail}
               onChange={(e) => setNotificationEmail(e.target.value)}
               placeholder="tu@email.com"
-              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm text-grafite focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
+              className="w-full px-3 py-2 bg-smoke border border-haze/30 rounded-lg text-sm text-oyster placeholder:text-nevada focus:outline-none focus:ring-2 focus:ring-copper focus:border-transparent"
             />
           </div>
         </div>
 
-        <div className="border-t border-slate-200 my-4" />
+        <div className="border-t border-haze/30 my-4" />
 
         {/* Language Section */}
         <div>
@@ -102,7 +102,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               onClick={() => setLanguage('ES')}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'ES'
                 ? 'bg-navy text-swirl ring-2 ring-offset-2 ring-navy'
-                : 'bg-oyster text-grafite'
+                : 'bg-smoke text-oyster hover:bg-haze/50'
                 }`}
             >
               🇪🇸 {t('spanish')}
@@ -112,7 +112,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               onClick={() => setLanguage('EN')}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'EN'
                 ? 'bg-navy text-swirl ring-2 ring-offset-2 ring-navy'
-                : 'bg-oyster text-grafite'
+                : 'bg-smoke text-oyster hover:bg-haze/50'
                 }`}
             >
               🇬🇧 {t('english')}
