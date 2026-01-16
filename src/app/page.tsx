@@ -4,8 +4,11 @@ import { CategorySelection } from '../components/landing/CategorySelection';
 import { api } from '../services/api';
 import { Category } from '../types';
 import { getCategoryConfig } from '../config/categoryConfig';
+import { useAuth } from '../contexts/AuthContext';
+import LandingPage from './landing/page';
+import { DashboardLayout } from '../components/layout/DashboardLayout';
 
-export default function HomePage() {
+const CategoryBrowser = () => {
     const [categories, setCategories] = useState<Category[]>([]);
     const navigate = useNavigate();
 
@@ -26,9 +29,27 @@ export default function HomePage() {
     }, []);
 
     return (
-        <CategorySelection 
+        <CategorySelection
             categories={categories}
             onSelectCategory={(categoryId: string) => navigate(`/agents/${categoryId}`)}
         />
+    );
+};
+
+export default function RootPage() {
+    const { isAuthenticated, isLoading } = useAuth();
+
+    if (isLoading) {
+        return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
+    }
+
+    if (!isAuthenticated) {
+        return <LandingPage />;
+    }
+
+    return (
+        <DashboardLayout>
+            <CategoryBrowser />
+        </DashboardLayout>
     );
 }
