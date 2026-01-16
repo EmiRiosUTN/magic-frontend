@@ -27,9 +27,9 @@ export function Loader({
             fullScreen && "min-h-[60vh] w-full", // Use 60vh to center nicely on screen without forcing full viewport if inside a container
             className
         )}>
-            <Spinner className={cn("text-blue-600", sizeClasses[size])} />
+            <Spinner className={cn("text-copper", sizeClasses[size])} />
             {text && (
-                <p className="font-roboto text-slate-600 text-sm font-medium animate-pulse">
+                <p className="font-roboto text-oyster text-sm font-medium animate-pulse">
                     {text}
                 </p>
             )}

@@ -16,7 +16,7 @@ import ChatPage from './app/chat/page';
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
-  if (isLoading) return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center bg-grafite text-oyster">Cargando...</div>;
   if (isAuthenticated) return <Navigate to="/" replace />;
 
   return <>{children}</>;
@@ -26,7 +26,7 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
-  if (isLoading) return <div className="min-h-screen flex items-center justify-center">Cargando...</div>;
+  if (isLoading) return <div className="min-h-screen flex items-center justify-center bg-grafite text-oyster">Cargando...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return <>{children}</>;
@@ -62,7 +62,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <AppRoutes/>
+        <AppRoutes />
       </AuthProvider>
     </BrowserRouter>
   );

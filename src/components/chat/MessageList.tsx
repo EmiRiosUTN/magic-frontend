@@ -17,13 +17,13 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
     return (
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="text-center max-w-md">
-          <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Sparkles size={32} className="text-slate-400" />
+          <div className="w-16 h-16 bg-smoke rounded-full flex items-center justify-center mx-auto mb-4">
+            <Sparkles size={32} className="text-haze" />
           </div>
-          <h3 className="text-lg font-semibold text-slate-900 mb-2">
+          <h3 className="text-lg font-semibold text-oyster mb-2">
             Comienza una conversación
           </h3>
-          <p className="text-sm text-slate-600">
+          <p className="text-sm text-nevada">
             Escribe un mensaje para comenzar a interactuar con este agente
           </p>
         </div>

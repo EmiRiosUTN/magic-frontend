@@ -13,13 +13,13 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   return (
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
       <div
-        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${isUser ? 'bg-blue-600' : 'bg-slate-100'
+        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${isUser ? 'bg-copper' : 'bg-smoke'
           }`}
       >
         {isUser ? (
-          <User size={16} className="text-white" />
+          <User size={16} className="text-grafite" />
         ) : (
-          <Bot size={16} className="text-slate-700" />
+          <Bot size={16} className="text-oyster" />
         )}
       </div>
 
@@ -29,13 +29,13 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
       >
         <div
           className={`px-4 py-3 rounded-2xl ${isUser
-            ? 'bg-blue-600 text-white'
-            : 'bg-slate-100 text-slate-900'
+            ? 'bg-copper text-grafite'
+            : 'bg-smoke text-oyster'
             }`}
         >
           <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
         </div>
-        <span className="text-xs text-slate-500 mt-1 px-2 block">
+        <span className="text-xs text-haze mt-1 px-2 block">
           {new Date(message.timestamp ?? Date.now()).toLocaleTimeString('es-ES', {
             hour: '2-digit',
             minute: '2-digit',

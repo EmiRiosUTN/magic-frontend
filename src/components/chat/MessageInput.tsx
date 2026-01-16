@@ -88,7 +88,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disab
   return (
     <div className="p-4 bg-transparent">
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto relative">
-        <div className="bg-white rounded-xl shadow-lg border-0 ring-1 ring-slate-100 flex items-end p-2 gap-2 transition-shadow hover:shadow-xl focus-within:shadow-xl focus-within:ring-slate-200">
+        <div className="bg-smoke rounded-xl shadow-lg border-0 ring-1 ring-haze/30 flex items-end p-2 gap-2 transition-shadow hover:shadow-xl focus-within:shadow-xl focus-within:ring-copper/50">
           <textarea
             ref={textareaRef}
             value={message}
@@ -97,7 +97,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disab
             placeholder="Envía un mensaje..."
             disabled={disabled}
             rows={1}
-            className="flex-1 resize-none py-3 pl-2 bg-transparent border-0 text-slate-700 placeholder:text-slate-400 focus:ring-0 focus:outline-0 max-h-32 text-base leading-relaxed"
+            className="flex-1 resize-none py-3 pl-2 bg-transparent border-0 text-oyster placeholder:text-nevada focus:ring-0 focus:outline-0 max-h-32 text-base leading-relaxed"
             style={{ minHeight: '52px' }}
           />
           <div className="pb-1 pr-1">
@@ -106,7 +106,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disab
               type="submit"
               disabled={!message.trim() || disabled}
               label="Send message"
-              className="bg-blue-600 text-white hover:bg-blue-500 disabled:bg-slate-200 disabled:text-slate-400 rounded-xl w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg disabled:shadow-none disabled:scale-100"
+              className="bg-copper text-grafite hover:bg-copper/90 disabled:bg-haze/30 disabled:text-haze rounded-xl w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg disabled:shadow-none disabled:scale-100"
             />
           </div>
         </div>

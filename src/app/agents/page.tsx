@@ -16,7 +16,7 @@ export default function AgentsPage() {
         const loadData = async () => {
             if (!categoryId) return;
             try {
-               const agentsResponse: any = await api.getAgentsByCategory(categoryId);
+                const agentsResponse: any = await api.getAgentsByCategory(categoryId);
                 setAgents(agentsResponse.agents || []);
 
                 const catsResponse: any = await api.getCategories();
@@ -37,7 +37,7 @@ export default function AgentsPage() {
 
 
 
-    if (!category) return <Loader text="Cargando categoría..." fullScreen />;
+    if (!category) return <div className="min-h-screen bg-grafite flex items-center justify-center"><Loader text="Cargando categoría..." size="lg" /></div>;
 
     return (
         <AgentSelection

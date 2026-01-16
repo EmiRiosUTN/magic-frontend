@@ -12,7 +12,7 @@ export default function TasksPage() {
                     icon={<ArrowLeft size={20} />}
                     onClick={() => navigate('/')}
                     label="Volver"
-                    className="bg-white shadow-lg hover:bg-slate-100"
+                    className="bg-smoke shadow-lg hover:bg-haze/50 text-oyster"
                 />
             </div>
             <ProjectsView
