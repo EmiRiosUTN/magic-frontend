@@ -43,14 +43,14 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
-                <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h2 className="text-lg font-medium text-slate-900">
+            <div className="bg-grafite rounded-xl shadow-2xl max-w-md w-full">
+                <div className="flex items-center justify-between p-6 border-b border-smoke">
+                    <h2 className="text-lg font-medium text-swirl">
                         {initialData ? t('editProject') : t('newProject')}
                     </h2>
                     <button
                         onClick={handleClose}
-                        className="text-slate-400 hover:text-slate-600 transition-colors"
+                        className="text-swirl hover:cursor-pointer transition-colors"
                     >
                         <X size={24} />
                     </button>
@@ -58,14 +58,14 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('projectName')} *
                         </label>
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 text-sm text-grafite border border-smoke rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                             placeholder={t('projectNamePlaceholder')}
                             maxLength={100}
                             required
@@ -73,13 +73,13 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('projectDescription')}
                         </label>
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full px-4 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                            className="w-full px-4 py-2 text-sm text-grafite border border-smoke rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
                             placeholder={t('projectDescriptionPlaceholder')}
                             rows={3}
                             maxLength={1000}
@@ -87,7 +87,7 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('color')}
                         </label>
                         <div className="grid grid-cols-6 gap-2">
@@ -96,7 +96,7 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                                     key={c.value}
                                     type="button"
                                     onClick={() => setColor(c.value)}
-                                    className={`w-full aspect-square rounded-lg transition-all ${color === c.value ? 'ring-2 ring-offset-2 ring-slate-900 scale-110' : 'hover:scale-105'
+                                    className={`w-full aspect-square rounded-lg transition-all ${color === c.value ? 'ring-2 ring-offset-2 ring-grafite scale-110' : 'hover:scale-105'
                                         }`}
                                     style={{ backgroundColor: c.value }}
                                     title={c.label}
@@ -109,13 +109,13 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="flex-1 px-4 py-2 border border-slate-300 text-white bg-red-700 rounded-lg hover:bg-red-800 transition-colors"
+                            className="flex-1 px-4 py-2 border border-smoke text-swirl bg-oxid rounded-lg hover:bg-oxid/80 transition-colors"
                         >
                             {t('cancel')}
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 px-4 py-2 bg-navy text-swirl rounded-lg hover:bg-navy/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!name.trim()}
                         >
                             {initialData ? t('save') : t('create')}

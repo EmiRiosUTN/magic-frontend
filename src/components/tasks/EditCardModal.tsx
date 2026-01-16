@@ -66,12 +66,12 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
     return (
         <>
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
-                <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
-                    <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                        <h2 className="text-xl font-medium text-slate-900">Editar tarea</h2>
+                <div className="bg-grafite rounded-xl shadow-2xl max-w-md w-full">
+                    <div className="flex items-center justify-between p-6 border-b border-smoke">
+                        <h2 className="text-xl font-medium text-swirl">Editar tarea</h2>
                         <button
                             onClick={onClose}
-                            className="text-slate-400 hover:text-slate-600 transition-colors"
+                            className="text-swirl hover:cursor-pointer transition-colors"
                         >
                             <X size={24} />
                         </button>
@@ -79,7 +79,7 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
 
                     <form onSubmit={handleSubmit} className="p-6 space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="block text-sm font-medium text-swirl mb-2">
                                 Título *
                             </label>
                             <input
@@ -94,7 +94,7 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="block text-sm font-medium text-swirl mb-2">
                                 Descripción
                             </label>
                             <textarea
@@ -108,7 +108,7 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="block text-sm font-medium text-swirl mb-2">
                                 Prioridad
                             </label>
                             <div className="grid grid-cols-2 gap-2">
@@ -119,7 +119,7 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
                                         onClick={() => setPriority(p.value)}
                                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${priority === p.value
                                             ? `${p.color} ring-2 ring-offset-2 ring-slate-900`
-                                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                                            : 'bg-neutral-900 text-swirl hover:bg-neutral-700'
                                             }`}
                                     >
                                         {p.label}
@@ -129,7 +129,7 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
+                            <label className="block text-sm font-medium text-swirl mb-2">
                                 Fecha de vencimiento
                             </label>
                             <input
@@ -142,9 +142,9 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
 
                         {/* Reminder Configuration */}
                         {dueDate && (
-                            <div className="border-t border-slate-200 pt-4">
+                            <div className="border-t border-smoke pt-4">
                                 <div className="flex items-center justify-between mb-3">
-                                    <label className="block text-sm font-medium text-slate-700">
+                                    <label className="block text-sm font-medium text-swirl">
                                         🔔 Recordatorio
                                     </label>
                                     <button
@@ -161,7 +161,7 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
                                 </div>
                                 {reminderEnabled && (
                                     <div>
-                                        <label className="block text-xs text-slate-600 mb-2">
+                                        <label className="block text-xs text-swirl mb-2">
                                             Recordar con cuántos días de anticipación
                                         </label>
                                         <select
@@ -181,18 +181,18 @@ export function EditCardModal({ isOpen, onClose, onSubmit, card }: EditCardModal
                             </div>
                         )}
 
-                        <div className="flex gap-3 pt-4 border-t border-slate-200">
+                        <div className="flex gap-3 pt-4 border-t border-smoke">
                             <div className="flex-1" />
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="px-4 py-2 text-sm border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
+                                className="flex-1 px-4 py-2 text-sm border border-smoke text-swirl bg-oxid rounded-lg hover:bg-oxid/80 rounded-lg transition-colors"
                             >
                                 Cancelar
                             </button>
                             <button
                                 type="submit"
-                                className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 px-4 py-2 text-sm bg-navy text-swirl rounded-lg hover:bg-navy/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 disabled={!title.trim()}
                             >
                                 Guardar

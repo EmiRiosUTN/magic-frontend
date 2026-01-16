@@ -16,7 +16,11 @@ export default {
   			ubuntu: [
   				'Ubuntu Sans Mono',
   				'monospace'
-  			]
+  			],
+			inter: [
+				'Inter',
+				'sans-serif'
+			]
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -26,6 +30,18 @@ export default {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			'grafite': '#252525',
+			'smoke': '#454545',
+			'haze': '#8C8C8C',
+			'nevada': '#A7A39C',
+			'swirl': '#E9E5DC',
+			'oyster': '#E6E6E6',
+			'copper': '#B48758',
+			'plum': '#BF91A9',
+			'oxid': '#8B5C54',
+			'olive': '#6A7159',
+			'navy': '#52677D',
+			'rain': '#80979B',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'

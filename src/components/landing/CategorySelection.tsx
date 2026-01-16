@@ -8,7 +8,6 @@ interface CategorySelectionProps {
   onSelectCategory: (categoryId: string) => void;
 }
 
-// Helper function to get complete Tailwind classes (Tailwind doesn't support dynamic class generation)
 const getCategoryClasses = (icon: string) => {
   const classMap: Record<string, { gradient: string; text: string; border: string; hover: string }> = {
     'Image': {
@@ -63,14 +62,14 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <div className="min-h-screen page-bg flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-grafite via-[#3d2d37] to-[#4a3a44]">
       <header>
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="text-center">
-            <h1 className="text-5xl font-bold text-slate-700 mb-2 font-ubuntu">
+            <h1 className="text-5xl font-light text-swirl mb-2 font-inter">
               {t('selectCategory')}
             </h1>
-            <p className="text-slate-600 font-roboto">
+            <p className="text-haze font-roboto">
               {t('selectCategoryDesc')}
             </p>
           </div>
@@ -81,7 +80,6 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => {
-              // Get icon component from lucide-react
               const Icon = Icons[category.icon as keyof typeof Icons] as React.ComponentType<{
                 size?: number;
                 className?: string;
@@ -93,7 +91,7 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
                 <button
                   key={category.id}
                   onClick={() => onSelectCategory(category.id)}
-                  className={`group relative bg-white p-8 rounded-2xl ${classes.hover} transition-all text-left overflow-hidden`}
+                  className={`group relative bg-grafite p-8 rounded-2xl ${classes.hover} transition-all text-left overflow-hidden`}
                 >
                   <div className={`absolute inset-0 ${classes.gradient} opacity-0 group-hover:opacity-5 transition-opacity`} />
 
@@ -102,10 +100,10 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
                       {Icon && <Icon size={28} className="text-white" />}
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900 mb-2 font-ubuntu">
+                    <h3 className="text-xl font-medium text-swirl mb-2 font-inter">
                       {category.name}
                     </h3>
-                    <p className="text-sm text-slate-600 leading-relaxed font-roboto">
+                    <p className="text-sm text-haze leading-relaxed font-roboto">
                       {category.description}
                     </p>
 

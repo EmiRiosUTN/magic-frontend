@@ -1,5 +1,4 @@
-import React from 'react';
-import { LoginPage as Login } from '../../components/auth/LoginPage'; // Alias to avoid naming conflict if any
+import { LoginPage as Login } from '../../components/auth/LoginPage';
 
 export default function LoginPage() {
     return <Login />;

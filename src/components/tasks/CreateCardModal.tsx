@@ -65,20 +65,20 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 font-roboto">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
-                <div className="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h2 className="text-lg font-medium text-slate-900">{t('addTask')}</h2>
+            <div className="bg-grafite rounded-xl shadow-2xl max-w-md w-full">
+                <div className="flex items-center justify-between p-6 border-b border-smoke">
+                    <h2 className="text-lg font-medium text-swirl">{t('addTask')}</h2>
                     <button
                         onClick={handleClose}
-                        className="text-slate-400 hover:text-slate-600 transition-colors"
+                        className="text-swirl hover:text-slate-600 transition-colors"
                     >
                         <X size={24} />
-                    </button>
+                    </button> 
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('taskTitle')} *
                         </label>
                         <input
@@ -94,7 +94,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('taskDescription')}
                         </label>
                         <textarea
@@ -108,7 +108,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('priority')}
                         </label>
                         <div className="grid grid-cols-2 gap-2">
@@ -119,7 +119,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                                     onClick={() => setPriority(p.value)}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${priority === p.value
                                         ? `${p.color}`
-                                        : 'bg-gray-100 text-slate-700 hover:bg-gray-200'
+                                        : 'bg-neutral-900 text-swirl hover:bg-neutral-700'
                                         }`}
                                 >
                                     {p.label}
@@ -129,7 +129,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-2">
+                        <label className="block text-sm font-medium text-swirl mb-2">
                             {t('dueDate')}
                         </label>
                         <input
@@ -142,9 +142,9 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
 
                     {/* Reminder Configuration */}
                     {dueDate && (
-                        <div className="border-t border-slate-200 pt-4">
+                        <div className="border-t border-smoke pt-4">
                             <div className="flex items-center justify-between mb-3">
-                                <label className="block text-sm font-medium text-slate-700">
+                                <label className="block text-sm font-medium text-swirl">
                                     🔔 Recordatorio
                                 </label>
                                 <button
@@ -161,7 +161,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                             </div>
                             {reminderEnabled && (
                                 <div>
-                                    <label className="block text-xs text-slate-600 mb-2">
+                                    <label className="block text-xs text-swirl mb-2">
                                         Recordar con cuántos días de anticipación
                                     </label>
                                     <select
@@ -185,13 +185,13 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                         <button
                             type="button"
                             onClick={handleClose}
-                            className="flex-1 px-4 py-2 text-sm border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
+                            className="flex-1 px-4 py-2 text-sm border border-smoke text-swirl bg-oxid rounded-lg hover:bg-oxid/80 rounded-lg transition-colors"
                         >
                             {t('cancel')}
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 px-4 py-2 text-sm bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex-1 px-4 py-2 text-sm bg-navy text-swirl rounded-lg hover:bg-navy/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             disabled={!title.trim()}
                         >
                             {t('create')}

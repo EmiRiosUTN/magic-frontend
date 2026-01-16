@@ -64,15 +64,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
       <div className="space-y-6">
         {/* Email Notifications Section */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-swirl mb-3 flex items-center gap-2">
             <Mail size={16} />
             {t('notifications')}
           </h3>
-          <p className="text-sm text-slate-600 mb-4">
+          <p className="text-sm text-swirl mb-4">
             {t('notificationsDesc')}
           </p>
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-swirl mb-2">
               {t('notificationEmail')}
             </label>
             <input
@@ -80,7 +80,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               value={notificationEmail}
               onChange={(e) => setNotificationEmail(e.target.value)}
               placeholder="tu@email.com"
-              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
+              className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-sm text-grafite focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-transparent"
             />
           </div>
         </div>
@@ -89,11 +89,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
 
         {/* Language Section */}
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-swirl mb-3 flex items-center gap-2">
             <Globe size={16} />
             {t('language')}
           </h3>
-          <p className="text-sm text-slate-600 mb-4">
+          <p className="text-sm text-swirl mb-4">
             {t('languageDesc')}
           </p>
           <div className="grid grid-cols-2 gap-3">
@@ -101,8 +101,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               type="button"
               onClick={() => setLanguage('ES')}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'ES'
-                ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                ? 'bg-navy text-swirl ring-2 ring-offset-2 ring-navy'
+                : 'bg-oyster text-grafite'
                 }`}
             >
               🇪🇸 {t('spanish')}
@@ -111,8 +111,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
               type="button"
               onClick={() => setLanguage('EN')}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${language === 'EN'
-                ? 'bg-slate-900 text-white ring-2 ring-offset-2 ring-slate-900'
-                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                ? 'bg-navy text-swirl ring-2 ring-offset-2 ring-navy'
+                : 'bg-oyster text-grafite'
                 }`}
             >
               🇬🇧 {t('english')}
@@ -123,7 +123,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
         <div className="pt-4 flex gap-3">
           <Button
             variant="secondary"
-            className="flex-1"
+            className="flex-1 bg-haze text-swirl font-light hover:bg-haze/80 hover:text-grafite"
             onClick={onClose}
             disabled={isLoading || saved}
           >
@@ -131,7 +131,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose })
           </Button>
           <Button
             variant="primary"
-            className="flex-1"
+            className="flex-1 bg-rain text-swirl font-light hover:bg-rain/80 hover:text-grafite"
             onClick={handleSave}
             disabled={isLoading || saved}
           >
