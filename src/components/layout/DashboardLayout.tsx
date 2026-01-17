@@ -4,7 +4,11 @@ import { Navbar } from './Navbar';
 import { useAuth } from '../../contexts/AuthContext';
 import { SettingsModal } from '../settings/SettingsModal';
 
-export const DashboardLayout: React.FC = () => {
+interface DashboardLayoutProps {
+    children?: React.ReactNode;
+}
+
+export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -22,7 +26,7 @@ export const DashboardLayout: React.FC = () => {
                 onTasksClick={() => navigate('/tasks')}
                 onSettingsClick={() => setIsSettingsOpen(true)}
             />
-            <Outlet />
+            {children || <Outlet />}
             <SettingsModal
                 isOpen={isSettingsOpen}
                 onClose={() => setIsSettingsOpen(false)}

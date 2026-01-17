@@ -6,6 +6,7 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 // Pages
 import HomePage from './app/page';
 import LoginPage from './app/login/page';
+import LandingPage from './app/landing/page';
 import AdminPage from './app/admin/page';
 import TasksPage from './app/tasks/page';
 import BoardPage from './app/board/page';
@@ -43,9 +44,16 @@ function AppRoutes() {
           </PublicRoute>
         }
       />
+      <Route
+        path="/landing"
+        element={
+          <PublicRoute>
+            <LandingPage />
+          </PublicRoute>
+        }
+      />
 
       <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
-        <Route path="/" element={<HomePage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/tasks" element={<TasksPage />} />
         <Route path="/board/:projectId" element={<BoardPage />} />
@@ -53,6 +61,7 @@ function AppRoutes() {
         <Route path="/chat/:agentId" element={<ChatPage />} />
       </Route>
 
+      <Route path="/" element={<HomePage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
