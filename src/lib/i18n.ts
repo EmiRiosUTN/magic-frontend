@@ -112,6 +112,11 @@ export const translations = {
         editProject: 'Editar Proyecto',
         projectNamePlaceholder: 'Ej: Desarrollo Web',
         projectDescriptionPlaceholder: 'Describe tu proyecto...',
+
+        // Delete Project
+        deleteProject: 'Eliminar Proyecto',
+        deleteProjectTitle: 'Eliminar Proyecto',
+        deleteProjectMessage: '¿Estás seguro de que quieres eliminar el proyecto "{{name}}"? Esta acción no se puede deshacer y se eliminarán todas las secciones y tareas.',
     },
     en: {
         // Common
@@ -226,6 +231,11 @@ export const translations = {
         editProject: 'Edit Project',
         projectNamePlaceholder: 'Ex: Web Development',
         projectDescriptionPlaceholder: 'Describe your project...',
+
+        // Delete Project
+        deleteProject: 'Delete Project',
+        deleteProjectTitle: 'Delete Project',
+        deleteProjectMessage: 'Are you sure you want to delete the project "{{name}}"? This action cannot be undone and will delete all sections and tasks.',
     },
 };
 

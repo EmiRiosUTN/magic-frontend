@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { AlertTriangle, X } from 'lucide-react';
 import { Button } from './Button';
 
@@ -31,30 +32,30 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 
   const colors = {
     warning: {
-      bg: 'bg-amber-50',
-      border: 'border-amber-200',
-      icon: 'text-amber-600',
-      button: 'bg-amber-600 hover:bg-amber-700',
+      bg: 'bg-copper/10',
+      border: 'border-copper/30',
+      icon: 'text-copper',
+      button: 'bg-copper hover:bg-copper/90',
     },
     danger: {
-      bg: 'bg-red-50',
-      border: 'border-red-200',
-      icon: 'text-red-600',
-      button: 'bg-red-600 hover:bg-red-700',
+      bg: 'bg-oxid/10',
+      border: 'border-oxid/30',
+      icon: 'text-oxid',
+      button: 'bg-oxid hover:bg-oxid/90',
     },
     info: {
-      bg: 'bg-blue-50',
-      border: 'border-blue-200',
-      icon: 'text-blue-600',
-      button: 'bg-red-700 hover:bg-blue-700',
+      bg: 'bg-navy/10',
+      border: 'border-navy/30',
+      icon: 'text-navy',
+      button: 'bg-navy hover:bg-navy/90',
     },
   };
 
   const currentColors = colors[type];
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full animate-in zoom-in-95 duration-200">
+  const modalContent = (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-smoke rounded-2xl shadow-2xl max-w-md w-full animate-in zoom-in-95 duration-200 border border-haze/30">
         <div className="p-6">
           <div className="flex items-start gap-4">
             <div className={`flex-shrink-0 w-12 h-12 rounded-full ${currentColors.bg} ${currentColors.border} border-2 flex items-center justify-center`}>
@@ -62,19 +63,19 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             </div>
 
             <div className="flex-1 min-w-0">
-              <h3 className="text-lg font-bold text-slate-900 mb-2">
+              <h3 className="text-lg font-bold text-oyster mb-2">
                 {title}
               </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
+              <p className="text-sm text-nevada leading-relaxed">
                 {message}
               </p>
             </div>
 
             <button
               onClick={onClose}
-              className="flex-shrink-0 p-1 hover:bg-slate-100 rounded-lg transition-colors"
+              className="flex-shrink-0 p-1 hover:bg-haze/50 rounded-lg transition-colors"
             >
-              <X size={20} className="text-slate-400" />
+              <X size={20} className="text-haze" />
             </button>
           </div>
         </div>
@@ -83,7 +84,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <Button
             onClick={onClose}
             variant="secondary"
-            className="flex-1"
+            className="flex-1 bg-haze text-oyster hover:bg-haze/80"
           >
             {cancelText}
           </Button>
@@ -93,7 +94,7 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
               onClose();
             }}
             variant={type === 'danger' ? 'danger' : 'primary'}
-            className={`flex-1 ${currentColors.button}`}
+            className={`flex-1 ${currentColors.button} text-oyster`}
           >
             {confirmText}
           </Button>
@@ -101,4 +102,6 @@ export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.body);
 };

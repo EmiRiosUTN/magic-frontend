@@ -43,6 +43,26 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
         }
     };
 
+    const handleArchive = async (id: string, isArchived: boolean) => {
+        try {
+            await api.archiveProject(id, isArchived);
+            await loadProjects();
+        } catch (error) {
+            console.error('Error archiving project:', error);
+            alert('Error al archivar el proyecto');
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        try {
+            await api.deleteProject(id);
+            await loadProjects();
+        } catch (error) {
+            console.error('Error deleting project:', error);
+            alert('Error al eliminar el proyecto. Solo se pueden eliminar proyectos archivados.');
+        }
+    };
+
     const activeProjects = projects.filter(p => !p.isArchived);
     const archivedProjects = projects.filter(p => p.isArchived);
     const displayProjects = showArchived ? archivedProjects : activeProjects;
@@ -111,6 +131,8 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
                                 key={project.id}
                                 project={project}
                                 onClick={() => onSelectProject(project.id)}
+                                onArchive={handleArchive}
+                                onDelete={handleDelete}
                             />
                         ))}
                     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogOut, Shield, ListTodo, Settings } from 'lucide-react';
+import { LogOut, Shield, ListTodo, Settings, Bot } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useTranslation } from '../../hooks/useTranslation';
 
@@ -18,12 +18,15 @@ export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick
         <nav className="bg-[#1B1B1B] drop-shadow-sm drop-shadow-black px-4 py-3 fixed top-0 left-0 w-full z-50 h-16">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 <div className="flex items-center">
-                    <h1
+                    <div
                         onClick={onLogoClick}
-                        className="font-merriweather text-xl font-bold text-plum cursor-pointer hover:text-swirl transition-colors"
+                        className="flex items-center gap-2 cursor-pointer group"
                     >
-                        Multi-Agent AI
-                    </h1>
+                        <Bot size={28} className="text-copper group-hover:text-plum transition-colors" />
+                        <span className="font-merriweather text-xl font-bold text-plum group-hover:text-swirl transition-colors">
+                            Multi-Agent AI
+                        </span>
+                    </div>
                 </div>
                 <div className="flex items-center gap-2">
                     {userRole && (
