@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Message } from '../../types';
 import { User, Bot } from 'lucide-react';
 
@@ -29,11 +31,19 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
       >
         <div
           className={`px-4 py-3 rounded-2xl ${isUser
-            ? 'bg-copper text-grafite'
-            : 'bg-smoke text-oyster'
+              ? 'bg-copper text-grafite'
+              : 'bg-smoke text-oyster'
             }`}
         >
-          <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+          {isUser ? (
+            <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+          ) : (
+            <div className="text-sm leading-relaxed prose prose-invert prose-sm max-w-none markdown-content">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {message.content}
+              </ReactMarkdown>
+            </div>
+          )}
         </div>
         <span className="text-xs text-haze mt-1 px-2 block">
           {new Date(message.timestamp ?? Date.now()).toLocaleTimeString('es-ES', {

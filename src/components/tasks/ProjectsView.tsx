@@ -79,17 +79,17 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
 
                 {isLoading ? (
                     <div className="flex items-center justify-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-copper"></div>
                     </div>
                 ) : displayProjects.length === 0 ? (
                     <div className="text-center py-20">
-                        <div className="text-slate-400 mb-4">
+                        <div className="text-haze mb-4">
                             <Archive size={64} className="mx-auto" />
                         </div>
-                        <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                        <h3 className="text-xl font-semibold text-oyster mb-2">
                             {showArchived ? 'No hay proyectos archivados' : 'No hay proyectos'}
                         </h3>
-                        <p className="text-slate-600 mb-6">
+                        <p className="text-nevada mb-6">
                             {showArchived
                                 ? 'Los proyectos archivados aparecerán aquí'
                                 : 'Crea tu primer proyecto para comenzar'}

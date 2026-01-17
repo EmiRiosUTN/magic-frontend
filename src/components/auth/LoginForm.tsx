@@ -81,11 +81,6 @@ export const LoginForm: React.FC = () => {
                         {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                     </Button>
                 </form>
-
-                <div className="mt-6 text-center text-sm text-swirl">
-                    <p>Usuario admin de prueba:</p>
-                    <p className="font-mono text-xs mt-1">admin@magicai.com / admin123</p>
-                </div>
             </div>
         </div>
     );

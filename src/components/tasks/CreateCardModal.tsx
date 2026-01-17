@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Bell } from 'lucide-react';
 import { Priority } from '../../types/tasks';
 import { useTranslation } from '../../hooks/useTranslation';
 
@@ -21,10 +21,10 @@ interface CreateCardModalProps {
 export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalProps) {
     const { t } = useTranslation();
     const PRIORITIES = [
-        { value: Priority.LOW, label: t('low'), color: 'bg-green-100 text-green-800' },
-        { value: Priority.MEDIUM, label: t('medium'), color: 'bg-yellow-100 text-yellow-800' },
-        { value: Priority.HIGH, label: t('high'), color: 'bg-orange-100 text-orange-800' },
-        { value: Priority.URGENT, label: t('urgent'), color: 'bg-red-100 text-red-800' },
+        { value: Priority.LOW, label: t('low'), color: 'bg-olive text-swirl' },
+        { value: Priority.MEDIUM, label: t('medium'), color: 'bg-copper text-grafite' },
+        { value: Priority.HIGH, label: t('high'), color: 'bg-oxid text-swirl' },
+        { value: Priority.URGENT, label: t('urgent'), color: 'bg-plum text-grafite' },
     ];
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -73,7 +73,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                         className="text-swirl hover:text-slate-600 transition-colors"
                     >
                         <X size={24} />
-                    </button> 
+                    </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -85,7 +85,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 bg-smoke text-oyster placeholder:text-nevada border border-haze/30 text-sm rounded-lg focus:ring-2 focus:ring-copper focus:border-transparent outline-none transition-all"
                             placeholder="Ejemplo: Implementar login"
                             maxLength={200}
                             required
@@ -100,7 +100,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                            className="w-full px-4 py-2 bg-smoke text-oyster placeholder:text-nevada border border-haze/30 text-sm rounded-lg focus:ring-2 focus:ring-copper focus:border-transparent outline-none transition-all resize-none"
                             placeholder="Describe la tarea..."
                             rows={3}
                             maxLength={5000}
@@ -118,8 +118,8 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                                     type="button"
                                     onClick={() => setPriority(p.value)}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${priority === p.value
-                                        ? `${p.color}`
-                                        : 'bg-neutral-900 text-swirl hover:bg-neutral-700'
+                                            ? `${p.color} ring-2 ring-offset-2 ring-offset-grafite`
+                                            : 'bg-smoke text-oyster hover:bg-haze/50'
                                         }`}
                                 >
                                     {p.label}
@@ -136,7 +136,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                             type="date"
                             value={dueDate}
                             onChange={(e) => setDueDate(e.target.value)}
-                            className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 bg-smoke text-oyster border border-haze/30 text-sm rounded-lg focus:ring-2 focus:ring-copper focus:border-transparent outline-none transition-all"
                         />
                     </div>
 
@@ -144,17 +144,18 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                     {dueDate && (
                         <div className="border-t border-smoke pt-4">
                             <div className="flex items-center justify-between mb-3">
-                                <label className="block text-sm font-medium text-swirl">
-                                    🔔 Recordatorio
+                                <label className="block text-sm font-medium text-swirl flex items-center gap-2">
+                                    <Bell size={16} className="text-copper" />
+                                    Recordatorio
                                 </label>
                                 <button
                                     type="button"
                                     onClick={() => setReminderEnabled(!reminderEnabled)}
-                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${reminderEnabled ? 'bg-blue-600' : 'bg-slate-300'
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${reminderEnabled ? 'bg-copper' : 'bg-haze'
                                         }`}
                                 >
                                     <span
-                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${reminderEnabled ? 'translate-x-6' : 'translate-x-1'
+                                        className={`inline-block h-4 w-4 transform rounded-full bg-oyster transition-transform ${reminderEnabled ? 'translate-x-6' : 'translate-x-1'
                                             }`}
                                     />
                                 </button>
@@ -167,7 +168,7 @@ export function CreateCardModal({ isOpen, onClose, onSubmit }: CreateCardModalPr
                                     <select
                                         value={reminderDaysBefore}
                                         onChange={(e) => setReminderDaysBefore(Number(e.target.value))}
-                                        className="w-full px-4 py-2 border border-slate-300 text-sm rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                        className="w-full px-4 py-2 bg-smoke text-oyster border border-haze/30 text-sm rounded-lg focus:ring-2 focus:ring-copper focus:border-transparent outline-none transition-all"
                                     >
                                         <option value={0}>El mismo día</option>
                                         <option value={1}>1 día antes</option>

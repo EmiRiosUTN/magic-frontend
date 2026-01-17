@@ -48,7 +48,7 @@ export function CreateSectionModal({ isOpen, onClose, onSubmit }: CreateSectionM
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full text-sm px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full text-sm px-4 py-2 bg-smoke text-oyster placeholder:text-nevada border border-haze/30 rounded-lg focus:ring-2 focus:ring-copper focus:border-transparent outline-none transition-all"
                             placeholder="Ejemplo: Cosas para hacer"
                             maxLength={100}
                             required

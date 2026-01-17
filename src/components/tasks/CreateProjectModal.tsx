@@ -65,7 +65,7 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full px-4 py-2 text-sm text-grafite border border-smoke rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 text-sm bg-smoke text-oyster placeholder:text-nevada border border-haze/30 rounded-lg focus:ring-2 focus:ring-copper focus:border-transparent outline-none transition-all"
                             placeholder={t('projectNamePlaceholder')}
                             maxLength={100}
                             required
@@ -79,7 +79,7 @@ export function CreateProjectModal({ isOpen, onClose, onSubmit, initialData }: C
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="w-full px-4 py-2 text-sm text-grafite border border-smoke rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all resize-none"
+                            className="w-full px-4 py-2 text-sm bg-smoke text-oyster placeholder:text-nevada border border-haze/30 rounded-lg focus:ring-2 focus:ring-copper focus:border-transparent outline-none transition-all resize-none"
                             placeholder={t('projectDescriptionPlaceholder')}
                             rows={3}
                             maxLength={1000}
