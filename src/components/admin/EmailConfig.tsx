@@ -9,9 +9,9 @@ export function EmailConfig() {
         smtpUser: '',
         smtpPassword: '',
         fromEmail: '',
-        fromName: 'MagicAI',
+        fromName: 'Multi-Agent AI',
     });
-    
+
     const [isSaving, setIsSaving] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -35,7 +35,7 @@ export function EmailConfig() {
                     <Mail className="text-blue-600" size={24} />
                 </div>
                 <div>
-                    <h2 className="text-lg font-semibold text-slate-900">Configuración de Correo</h2>
+                    <h2 className="text-lg font-semibold text-slate-900">Configuración de correo</h2>
                     <p className="text-sm text-slate-600">Configura el servidor SMTP para el envío de notificaciones</p>
                 </div>
             </div>
