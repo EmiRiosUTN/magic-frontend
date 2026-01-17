@@ -4,12 +4,14 @@ import * as Icons from 'lucide-react';
 import { ArrowLeft } from 'lucide-react';
 import { IconButton } from '../ui/IconButton';
 import { useTranslation } from '../../hooks/useTranslation';
+import { SearchBar } from '../search/SearchBar';
 
 interface AgentSelectionProps {
   category: Category;
   agents: Agent[];
   onSelectAgent: (agentId: string) => void;
   onBack: () => void;
+  categoryId?: string;
 }
 
 // Helper function to get complete Tailwind gradient class
@@ -30,6 +32,7 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
   agents,
   onSelectAgent,
   onBack,
+  categoryId,
 }) => {
   const { t } = useTranslation();
 
@@ -66,9 +69,15 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-8">
-            <p className="text-haze">
+            <p className="text-haze mb-4">
               {t('selectAgentDesc')}
             </p>
+            {/* Search Bar */}
+            <SearchBar
+              onSelectAgent={onSelectAgent}
+              placeholder={`Buscar en ${category.name}...`}
+              categoryId={categoryId}
+            />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

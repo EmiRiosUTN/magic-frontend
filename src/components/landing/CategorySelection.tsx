@@ -2,10 +2,12 @@ import React from 'react';
 import { Category } from '../../types';
 import * as Icons from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
+import { SearchBar } from '../search/SearchBar';
 
 interface CategorySelectionProps {
   categories: Category[];
   onSelectCategory: (categoryId: string) => void;
+  onSelectAgent: (agentId: string) => void;
 }
 
 const getCategoryClasses = (icon: string) => {
@@ -59,6 +61,7 @@ const getCategoryClasses = (icon: string) => {
 export const CategorySelection: React.FC<CategorySelectionProps> = ({
   categories,
   onSelectCategory,
+  onSelectAgent,
 }) => {
   const { t } = useTranslation();
   return (
@@ -69,9 +72,16 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
             <h1 className="text-5xl font-light text-swirl mb-2 font-inter">
               {t('selectCategory')}
             </h1>
-            <p className="text-haze font-roboto">
+            <p className="text-haze font-roboto mb-6">
               {t('selectCategoryDesc')}
             </p>
+            {/* Search Bar */}
+            <div className="max-w-2xl mx-auto">
+              <SearchBar
+                onSelectAgent={onSelectAgent}
+                placeholder="Buscar agente... (ej: redactor de mails)"
+              />
+            </div>
           </div>
         </div>
       </header>

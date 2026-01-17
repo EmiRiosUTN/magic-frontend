@@ -26,9 +26,10 @@ export default function HomePage() {
     }, []);
 
     return (
-        <CategorySelection 
+        <CategorySelection
             categories={categories}
             onSelectCategory={(categoryId: string) => navigate(`/agents/${categoryId}`)}
+            onSelectAgent={(agentId: string) => navigate(`/chat/${agentId}`)}
         />
     );
 }

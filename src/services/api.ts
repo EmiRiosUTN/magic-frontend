@@ -40,6 +40,13 @@ class ApiClient {
     return response.json();
   }
 
+  async get<T>(endpoint: string, options?: { params?: Record<string, string | number> }): Promise<T> {
+    const url = options?.params
+      ? `${endpoint}?${new URLSearchParams(options.params as Record<string, string>).toString()}`
+      : endpoint;
+    return this.request<T>(url);
+  }
+
   async login(email: string, password: string) {
     return this.request('/auth/login', {
       method: 'POST',

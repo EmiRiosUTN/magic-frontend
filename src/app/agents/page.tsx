@@ -45,6 +45,7 @@ export default function AgentsPage() {
             agents={agents}
             onSelectAgent={(agentId) => navigate(`/chat/${agentId}`)}
             onBack={() => navigate('/')}
+            categoryId={categoryId}
         />
     );
 }
