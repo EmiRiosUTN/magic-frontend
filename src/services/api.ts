@@ -29,12 +29,17 @@ class ApiClient {
     if (response.status === 401) {
       localStorage.removeItem('authToken');
       window.dispatchEvent(new Event('unauthorized'));
-      throw new Error('Unauthorized');
+      throw new Error('No autorizado'); // Unauthorized -> No autorizado
     }
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'Request failed' }));
-      throw new Error(error.error || error.message || 'Request failed');
+      const error = await response.json().catch(() => ({ message: 'Error en la solicitud' })); // Request failed -> Error en la solicitud
+      // If the backend returns a specific message, we use it. 
+      // Ideally backend should also be localized but for now we rely on generic fallbacks here if backend gives technical/English defaults.
+      // But user said "errors visible to user". 
+      // If backend sends "User not found", we might want to map it?
+      // For now, let's just translate the fallback.
+      throw new Error(error.error || error.message || 'Error en la solicitud');
     }
 
     return response.json();

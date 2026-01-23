@@ -12,20 +12,19 @@ interface ChatWindowProps {
 }
 
 export const ChatWindow: React.FC<ChatWindowProps> = ({
-  agent,
   chat,
   onSendMessage,
   isLoading,
 }) => {
   return (
-    <div className="flex-1 flex flex-col bg-grafite relative overflow-hidden">
+    <div className="flex-1 flex flex-col bg-gradient-to-br from-[#161616] to-grafite relative overflow-hidden">
 
       <MessageList messages={chat?.messages || []} />
 
       <MessageInput onSendMessage={onSendMessage} disabled={isLoading} />
 
       {isLoading && (
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 bg-smoke px-4 py-2 rounded-full shadow-lg border border-haze/30">
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 bg-grafite px-4 py-2 rounded-full shadow-lg border border-haze/30">
           <div className="flex items-center gap-2">
             <Spinner className="h-4 w-4 text-copper" />
             <span className="text-sm text-oyster ml-2">Pensando...</span>

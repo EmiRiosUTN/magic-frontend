@@ -9,7 +9,7 @@ import { ConfirmationModal } from '../../components/ui/ConfirmationModal';
 import { IconButton } from '../../components/ui/IconButton';
 import { Button } from '../../components/ui/Button';
 import { Loader } from '../../components/ui/Loader';
-import { ArrowLeft, MessageSquare } from 'lucide-react';
+import { ArrowLeft, MessageSquare, Info } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function ChatPage() {
@@ -18,30 +18,14 @@ export default function ChatPage() {
     const { user } = useAuth();
     const [agent, setAgent] = useState<Agent | null>(null);
 
-    // Hooks cannot be conditional, so we call it always, but handle null agentId inside if needed
     const chat = useChat(agentId || '');
 
     useEffect(() => {
         const loadAgent = async () => {
             if (!agentId) return;
-            // We need a way to get a single agent. 
-            // Since we don't have a direct getAgent endpoint shown in types (only getAgentsByCategory), 
-            // we might have to fetch categories or rely on previous state. 
-            // Ideally backend should support getAgentById.
-            // WORKAROUND: Fetch all categories -> first category -> find agent? No, too expensive.
-            // Let's assume we can fetch it or pass it. 
-            // For now, existing App.tsx logic fetched agents by category first. 
-            // Let's try to fetch all agents or finding the agent from the category if we knew it.
-            // Since we don't know the category here easily, we might need to modify the API or navigation state.
-            // Actually, we can fetch all categories -> all agents is slow.
-            // Let's implement a quick fetch if getAgent exists, else we rely on global context?
-            // Wait, standard practice: get /agents/:id.
-
-            // Assuming we don't have getAgentById, we will iterate categories to find it (inefficient but safe for now)
-            // or better, just render "Loading" until we find it.
+            
             try {
                 const catsResponse: any = await api.getCategories();
-                // This is bad N+1 but necessary without new endpoint
                 for (const cat of catsResponse.categories || []) {
                     const agentsResp: any = await api.getAgentsByCategory(cat.id);
                     const found = (agentsResp.agents || []).find((a: Agent) => a.id === agentId);
@@ -96,17 +80,28 @@ export default function ChatPage() {
             {/* Main Chat Area */}
             <div className="flex-1 flex flex-col bg-grafite min-w-0">
                 {/* Header */}
-                <div className="flex items-center gap-3 px-6 py-4 bg-smoke border-b border-haze/30 flex-none">
+                <div className="flex items-center gap-3 px-6 py-4 bg-[#161616]/60 drop-shadow-md flex-none">
                     <IconButton
                         icon={<ArrowLeft size={20} />}
                         onClick={() => navigate(`/agents/${agent.categoryId || agent.category?.id}`)}
                         label="Atrás"
+                        className='text-oyster hover:bg-transparent hover:text-nevada'
                     />
                     <div className="flex-1">
                         <h2 className="font-semibold text-oyster">{agent.name}</h2>
                         <p className="text-sm text-nevada">{agent.description}</p>
                     </div>
                 </div>
+
+                {agent.name === 'Generar imágenes' && (
+                    <div className="bg-plum/20 px-6 py-3 flex items-start gap-3">
+                        <Info size={18} className="text-plum mt-0.5 flex-shrink-0" />
+                        <p className="text-sm text-oyster">
+                            <span className="font-semibold block mb-0.5">Recomendación:</span>
+                            Para obtener resultados increíbles, te recomendamos usar primero nuestros <span className="text-plum font-medium">agentes especialistas en Prompts</span> (en esta misma categoría) para diseñar tu idea, y luego pegar el resultado aquí.
+                        </p>
+                    </div>
+                )}
 
                 {chat.currentConversation ? (
                     <ChatWindow

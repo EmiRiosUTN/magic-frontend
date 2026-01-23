@@ -155,7 +155,8 @@ export const useChat = (agentId: string) => {
             }
         } catch (error) {
             console.error('Error sending message:', error);
-            alert(error instanceof Error ? error.message : 'Error al enviar mensaje');
+            // Translate generic fallback
+            alert(error instanceof Error ? error.message : 'Error al enviar el mensaje');
         } finally {
             setIsLoading(false);
         }

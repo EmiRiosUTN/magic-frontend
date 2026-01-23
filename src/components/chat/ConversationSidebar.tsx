@@ -78,7 +78,7 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
 
   return (
     <>
-      <div className="w-80 bg-grafite border-r border-smoke flex flex-col h-full">
+      <div className="w-80 bg-grafite flex flex-col h-full">
         <div className="p-4 border-b border-smoke">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-oyster">Conversaciones</h3>
@@ -86,19 +86,19 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
               icon={<X size={18} />}
               onClick={() => setIsOpen(false)}
               label="Cerrar"
-              className="hover:bg-smoke"
+              className="hover:bg-smoke text-oyster"
             />
           </div>
 
           <button
             onClick={onNewConversation}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-copper text-grafite rounded-lg hover:bg-copper/90 transition-colors font-medium text-sm"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-navy/70 text-oyster rounded-lg hover:bg-navy/90 transition-colors font-medium text-sm"
           >
             <MessageSquarePlus size={18} />
             Nueva conversación
           </button>
 
-          <div className="mt-3 text-xs text-nevada text-center">
+          <div className="mt-3 text-xs text-oyster text-center">
             {conversations.length} / {maxConversations} conversaciones
           </div>
         </div>
@@ -124,26 +124,26 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
                     key={conversation.id}
                     onClick={() => onSelectConversation(conversation.id)}
                     className={`group relative p-3 rounded-lg cursor-pointer transition-all ${isActive
-                      ? 'bg-copper text-grafite shadow-sm'
-                      : 'hover:bg-smoke text-oyster'
+                      ? 'shadow-sm bg-smoke/40'
+                      : 'hover:bg-smoke bg-[#161616]'
                       }`}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <h4 className={`font-medium text-sm truncate ${isActive ? 'text-grafite' : 'text-oyster'
+                        <h4 className={`font-medium text-sm truncate ${isActive ? 'text-oyster' : 'text-oyster'
                           }`}>
                           {conversation.title}
                         </h4>
                         <div className="flex items-center gap-2 mt-1">
-                          <span className={`text-xs ${isActive ? 'text-grafite/70' : 'text-nevada'
+                          <span className={`text-xs ${isActive ? 'text-nevada' : 'text-nevada'
                             }`}>
                             {conversation.messageCount} mensajes
                           </span>
-                          <span className={`text-xs ${isActive ? 'text-grafite/50' : 'text-haze'
+                          <span className={`text-xs ${isActive ? 'text-nevada' : 'text-haze'
                             }`}>
                             •
                           </span>
-                          <span className={`text-xs ${isActive ? 'text-grafite/70' : 'text-nevada'
+                          <span className={`text-xs ${isActive ? 'text-nevada' : 'text-nevada'
                             }`}>
                             {formatDate(conversation.lastMessageAt)}
                           </span>
@@ -153,8 +153,8 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
                       <button
                         onClick={(e) => handleDeleteClick(conversation.id, e)}
                         className={`p-1.5 rounded transition-colors ${isActive
-                          ? 'hover:bg-oxid text-grafite opacity-0 group-hover:opacity-100'
-                          : 'hover:bg-oxid/20 text-haze hover:text-oxid opacity-0 group-hover:opacity-100'
+                          ? 'hover:bg-oxid text-swirl opacity-0 group-hover:opacity-100'
+                          : 'hover:bg-oxid/20 text-swirl hover:text-oxid opacity-0 group-hover:opacity-100'
                           }`}
                         title="Eliminar"
                       >
