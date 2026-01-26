@@ -9,9 +9,10 @@ class ApiClient {
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${this.baseURL}${endpoint}`;
-    const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
-    };
+    const headers: Record<string, string> = {};
+    if (!(options.body instanceof FormData)) {
+      headers['Content-Type'] = 'application/json';
+    }
 
     const token = localStorage.getItem('authToken');
     if (token) {
@@ -163,10 +164,11 @@ class ApiClient {
     return this.request(`/messages/${conversationId}?limit=${limit}&offset=${offset}`);
   }
 
-  async sendMessage(conversationId: string, content: string) {
+  async sendMessage(conversationId: string, content: string | FormData) {
+    const body = content instanceof FormData ? content : JSON.stringify({ content });
     return this.request(`/messages/${conversationId}`, {
       method: 'POST',
-      body: JSON.stringify({ content }),
+      body,
     });
   }
 

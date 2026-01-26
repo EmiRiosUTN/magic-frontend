@@ -133,14 +133,22 @@ export const useChat = (agentId: string) => {
         return cleanMessage.substring(0, 40) + '...';
     };
 
-    const handleSendMessage = async (message: string) => {
+    const handleSendMessage = async (message: string, file?: File) => {
         if (!currentConversation || !agentId) return;
 
         const isFirstMessage = messages.length === 0;
         setIsLoading(true);
 
         try {
-            const response: any = await api.sendMessage(currentConversation.id, message);
+            let payload: string | FormData = message;
+            if (file) {
+                const formData = new FormData();
+                formData.append('content', message);
+                formData.append('file', file);
+                payload = formData;
+            }
+
+            const response: any = await api.sendMessage(currentConversation.id, payload);
             setMessages((prev) => [...prev, response.userMessage, response.assistantMessage]);
 
             if (isFirstMessage) {

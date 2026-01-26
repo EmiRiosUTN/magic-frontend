@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send } from 'lucide-react';
+import { Send, Paperclip, X } from 'lucide-react';
 import { IconButton } from '../ui/IconButton';
 
 interface MessageInputProps {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (message: string, file?: File) => void;
   disabled?: boolean;
 }
 
 export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) => {
   const [message, setMessage] = useState('');
+  const [file, setFile] = useState<File | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -20,9 +22,17 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disab
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim() && !disabled) {
-      onSendMessage(message.trim());
+    if ((message.trim() || file) && !disabled) {
+      onSendMessage(message.trim(), file || undefined);
       setMessage('');
+      setFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
     }
   };
 
@@ -88,7 +98,40 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disab
   return (
     <div className="p-4 bg-transparent">
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto relative">
+        {file && (
+          <div className="mb-2 px-4">
+            <div className="inline-flex items-center gap-2 bg-white/10 p-2 rounded-lg border border-white/10 text-oyster">
+              <span className="text-sm truncate max-w-[200px]">{file.name}</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setFile(null);
+                  if (fileInputRef.current) fileInputRef.current.value = '';
+                }}
+                className="hover:text-red-400 transition-colors"
+              >
+                <X size={16} />
+              </button>
+            </div>
+          </div>
+        )}
         <div className="bg-smoke rounded-xl shadow-lg border-0 ring-1 ring-haze/30 flex items-end p-2 gap-2 transition-shadow hover:shadow-xl focus-within:shadow-xl focus-within:ring-copper/50">
+          <input
+            type="file"
+            ref={fileInputRef}
+            onChange={handleFileSelect}
+            className="hidden"
+            accept="image/*,video/*"
+          />
+          <div className="pb-1 pl-1">
+            <IconButton
+              icon={<Paperclip size={20} className="stroke-[2.5px]" />}
+              onClick={() => fileInputRef.current?.click()}
+              disabled={disabled}
+              label="Attach file"
+              className="text-oyster hover:text-copper hover:bg-haze/10 rounded-xl w-10 h-10 flex items-center justify-center transition-all duration-200"
+            />
+          </div>
           <textarea
             ref={textareaRef}
             value={message}
@@ -104,7 +147,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disab
             <IconButton
               icon={<Send size={20} className="stroke-[2.5px]" />}
               type="submit"
-              disabled={!message.trim() || disabled}
+              disabled={(!message.trim() && !file) || disabled}
               label="Send message"
               className="bg-copper text-grafite hover:bg-copper/90 disabled:bg-haze/30 disabled:text-haze rounded-xl w-10 h-10 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 shadow-md hover:shadow-lg disabled:shadow-none disabled:scale-100"
             />
