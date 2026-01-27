@@ -47,29 +47,31 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
   return (
     <div className="min-h-screen bg-grafite flex flex-col">
       <header>
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center gap-4 mb-4">
-            <IconButton
-              icon={<ArrowLeft size={20} />}
-              onClick={onBack}
-              label="Volver"
-              className="text-swirl hover:bg-transparent hover:text-swirl/80"
-            />
-            <div className={`w-12 h-12 ${gradientClass} rounded-xl flex items-center justify-center shadow-lg`}>
-              {CategoryIcon && <CategoryIcon size={24} className="text-swirl" />}
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+            <div className="flex items-center gap-4">
+              <IconButton
+                icon={<ArrowLeft size={20} />}
+                onClick={onBack}
+                label="Volver"
+                className="text-swirl hover:bg-transparent hover:text-swirl/80"
+              />
+              <div className={`w-12 h-12 ${gradientClass} rounded-xl flex items-center justify-center shadow-lg`}>
+                {CategoryIcon && <CategoryIcon size={24} className="text-swirl" />}
+              </div>
             </div>
             <div>
               <h1 className="text-2xl font-bold text-swirl">{category.name}</h1>
-              <p className="text-sm text-swirl">{category.description}</p>
+              <p className="text-sm text-swirl/80">{category.description}</p>
             </div>
           </div>
         </div>
       </header>
 
       <main className="flex-1 overflow-y-auto">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-8">
-            <p className="text-haze mb-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 pb-8">
+          <div className="mb-6 md:mb-8">
+            <p className="text-haze mb-4 text-sm md:text-base">
               {t('selectAgentDesc')}
             </p>
             {/* Search Bar */}
@@ -80,7 +82,7 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
             />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {agents.map((agent) => {
               const Icon = Icons[agent.icon as keyof typeof Icons] as React.ComponentType<{
                 size?: number;
@@ -91,7 +93,7 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
                 <button
                   key={agent.id}
                   onClick={() => onSelectAgent(agent.id)}
-                  className="group bg-neutral-900 p-6 rounded-2xl hover:shadow-xl transition-all text-left"
+                  className="group bg-neutral-900 p-4 md:p-6 rounded-2xl hover:shadow-xl transition-all text-left"
                 >
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-swirl rounded-xl flex-shrink-0 group-hover:bg-plum transition-colors">

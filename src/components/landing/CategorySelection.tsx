@@ -67,12 +67,12 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-grafite via-[#3d2d37] to-[#4a3a44]">
       <header>
-        <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 md:py-6">
           <div className="text-center">
-            <h1 className="text-5xl font-light text-swirl mb-2 font-inter">
+            <h1 className="text-3xl md:text-5xl font-light text-swirl mb-2 font-inter">
               {t('selectCategory')}
             </h1>
-            <p className="text-haze font-roboto mb-6">
+            <p className="text-haze font-roboto mb-6 text-sm md:text-base">
               {t('selectCategoryDesc')}
             </p>
             {/* Search Bar */}
@@ -87,8 +87,8 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
       </header>
 
       <main className="flex-1 overflow-y-auto">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {categories.map((category) => {
               const Icon = Icons[category.icon as keyof typeof Icons] as React.ComponentType<{
                 size?: number;
@@ -101,7 +101,7 @@ export const CategorySelection: React.FC<CategorySelectionProps> = ({
                 <button
                   key={category.id}
                   onClick={() => onSelectCategory(category.id)}
-                  className={`group relative bg-grafite p-8 rounded-2xl ${classes.hover} transition-all text-left overflow-hidden`}
+                  className={`group relative bg-grafite p-6 md:p-8 rounded-2xl ${classes.hover} transition-all text-left overflow-hidden`}
                 >
                   <div className={`absolute inset-0 ${classes.gradient} opacity-0 group-hover:opacity-5 transition-opacity`} />
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogOut, Shield, ListTodo, Settings, Bot } from 'lucide-react';
+import { LogOut, Shield, ListTodo, Settings } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useTranslation } from '../../hooks/useTranslation';
 
@@ -14,6 +14,8 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick, onLogoClick, onTasksClick, onSettingsClick }) => {
     const { t } = useTranslation();
+    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
     return (
         <nav className="bg-[#1B1B1B] drop-shadow-sm drop-shadow-black px-4 py-3 fixed top-0 left-0 w-full z-50 h-16">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -22,13 +24,16 @@ export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick
                         onClick={onLogoClick}
                         className="flex items-center gap-2 cursor-pointer group"
                     >
-                        <Bot size={28} className="text-copper group-hover:text-plum transition-colors" />
-                        <span className="font-merriweather text-xl font-bold text-plum group-hover:text-swirl transition-colors">
-                            Multi-Agent AI
-                        </span>
+                        <img
+                            src="/images/logo-11.webp"
+                            alt="Logo"
+                            className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
+                        />
                     </div>
                 </div>
-                <div className="flex items-center gap-2">
+
+                {/* Desktop Menu */}
+                <div className="hidden md:flex items-center gap-2">
                     {userRole && (
                         <>
                             <Button
@@ -65,7 +70,72 @@ export const Navbar: React.FC<NavbarProps> = ({ userRole, onLogout, onAdminClick
                         </>
                     )}
                 </div>
+
+                {/* Mobile Menu Toggle */}
+                <div className="md:hidden flex items-center">
+                    {userRole && (
+                        <Button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="text-swirl bg-transparent hover:bg-white/10 p-2"
+                        >
+                            {isMenuOpen ? <LogOut size={24} className="rotate-180" /> : <Settings size={24} />}
+                        </Button>
+                    )}
+                </div>
             </div>
+
+            {/* Mobile Menu Overlay */}
+            {isMenuOpen && userRole && (
+                <div className="md:hidden absolute top-16 left-0 w-full bg-[#1B1B1B] border-t border-white/10 shadow-lg flex flex-col p-4 gap-2">
+                    <Button
+                        onClick={() => {
+                            onTasksClick?.();
+                            setIsMenuOpen(false);
+                        }}
+                        className="text-swirl hover:text-plum bg-transparent hover:bg-white/5 justify-start"
+                    >
+                        <ListTodo size={20} className="mr-3" />
+                        {t('tasks')}
+                    </Button>
+
+                    {userRole === 'ADMIN' && (
+                        <Button
+                            onClick={() => {
+                                onAdminClick?.();
+                                setIsMenuOpen(false);
+                            }}
+                            className="text-swirl hover:text-plum bg-transparent hover:bg-white/5 justify-start"
+                        >
+                            <Shield size={20} className="mr-3" />
+                            {t('admin')}
+                        </Button>
+                    )}
+
+                    <Button
+                        onClick={() => {
+                            onSettingsClick?.();
+                            setIsMenuOpen(false);
+                        }}
+                        className="text-swirl hover:text-plum bg-transparent hover:bg-white/5 justify-start"
+                    >
+                        <Settings size={20} className="mr-3" />
+                        {t('settings')}
+                    </Button>
+
+                    <div className="h-px w-full bg-white/10 my-1" />
+
+                    <Button
+                        onClick={() => {
+                            onLogout?.();
+                            setIsMenuOpen(false);
+                        }}
+                        className="text-swirl hover:text-plum bg-transparent hover:bg-white/5 justify-start"
+                    >
+                        <LogOut size={20} className="mr-3" />
+                        {t('logout')}
+                    </Button>
+                </div>
+            )}
         </nav>
     );
 };

@@ -49,7 +49,7 @@ export function SectionColumn({ section, onAddCard, onCardClick, onDeleteSection
     };
 
     return (
-        <div className="font-roboto flex-shrink-0 w-80 h-full max-h-full pb-2">
+        <div className="font-roboto flex-shrink-0 w-[85vw] md:w-80 h-full max-h-full pb-2">
             <div className="bg-neutral-900 rounded-2xl flex flex-col h-full max-h-full shadow-sm">
                 {/* Header */}
                 <div className="p-4 pb-2 flex items-center justify-between">

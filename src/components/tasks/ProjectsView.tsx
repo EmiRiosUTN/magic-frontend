@@ -69,8 +69,8 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
 
     return (
         <div className="min-h-screen bg-grafite font-roboto">
-            <div className="max-w-7xl mx-auto px-6 py-8">
-                <div className="flex items-center justify-between mb-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
                     <div>
                         <h1 className="text-2xl font-semibold text-swirl mb-2">{t('myProjects')}</h1>
                         <p className="text-oyster text-sm">
@@ -78,10 +78,10 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
                         </p>
                     </div>
 
-                    <div className="flex gap-3 text-sm">
+                    <div className="flex gap-3 text-sm w-full md:w-auto">
                         <button
                             onClick={() => setShowArchived(!showArchived)}
-                            className="px-4 py-2 bg-plum text-oyster rounded-lg hover:bg-plum/80 transition-colors flex items-center gap-2"
+                            className="flex-1 md:flex-none justify-center px-4 py-2 bg-plum text-oyster rounded-lg hover:bg-plum/80 transition-colors flex items-center gap-2"
                         >
                             {showArchived ? <ArchiveRestore size={18} /> : <Archive size={18} />}
                             {showArchived ? 'Ver activos' : t('viewArchived')}
@@ -89,7 +89,7 @@ export function ProjectsView({ onSelectProject }: ProjectsViewProps) {
 
                         <button
                             onClick={() => setIsCreateModalOpen(true)}
-                            className="px-4 py-2 bg-navy text-oyster rounded-lg hover:bg-navy/80 transition-colors flex items-center gap-2"
+                            className="flex-1 md:flex-none justify-center px-4 py-2 bg-navy text-oyster rounded-lg hover:bg-navy/80 transition-colors flex items-center gap-2"
                         >
                             <Plus size={18} />
                             {t('newProject')}

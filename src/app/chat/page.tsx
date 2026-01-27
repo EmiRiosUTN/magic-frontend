@@ -23,7 +23,7 @@ export default function ChatPage() {
     useEffect(() => {
         const loadAgent = async () => {
             if (!agentId) return;
-            
+
             try {
                 const catsResponse: any = await api.getCategories();
                 for (const cat of catsResponse.categories || []) {
@@ -42,6 +42,7 @@ export default function ChatPage() {
     }, [agentId]);
 
     const [initializing, setInitializing] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         if (agentId) {
@@ -62,39 +63,52 @@ export default function ChatPage() {
 
     if (!agent || !agentId) return <div className="flex h-screen items-center justify-center bg-grafite"><Loader text="Cargando agente..." size="lg" /></div>;
 
+    const handleSelectConversation = async (id: string) => {
+        await chat.handleSelectConversation(id);
+        setIsSidebarOpen(false); // Close sidebar on mobile when selecting a conversation
+    };
+
     return (
-        <div className="flex h-[calc(100vh-64px)]">
-            {/* Sidebar - Fixed width */}
-            <div className="w-80 border-r border-smoke bg-grafite h-full">
-                <ConversationSidebar
-                    conversations={chat.conversations}
-                    currentConversationId={chat.currentConversation?.id || ''}
-                    agentName={agent.name}
-                    onSelectConversation={chat.handleSelectConversation}
-                    onNewConversation={chat.handleNewConversation}
-                    onDeleteConversation={chat.handleDeleteConversation}
-                    maxConversations={user?.subscriptionType.maxConversationsPerAgent || 5}
-                />
-            </div>
+        <div className="flex h-[calc(100vh-64px)] relative">
+            {/* Sidebar - Responsive */}
+            <ConversationSidebar
+                conversations={chat.conversations}
+                currentConversationId={chat.currentConversation?.id || ''}
+                agentName={agent.name}
+                onSelectConversation={handleSelectConversation}
+                onNewConversation={chat.handleNewConversation}
+                onDeleteConversation={chat.handleDeleteConversation}
+                maxConversations={user?.subscriptionType.maxConversationsPerAgent || 5}
+                isOpen={isSidebarOpen}
+                onClose={() => setIsSidebarOpen(false)}
+            />
 
             {/* Main Chat Area */}
             <div className="flex-1 flex flex-col bg-grafite min-w-0">
                 {/* Header */}
-                <div className="flex items-center gap-3 px-6 py-4 bg-[#161616]/60 drop-shadow-md flex-none">
+                <div className="flex items-center gap-3 px-4 md:px-6 py-4 bg-[#161616]/60 drop-shadow-md flex-none">
+                    {/* Mobile Sidebar Toggle - Visible only on mobile */}
+                    <IconButton
+                        icon={<MessageSquare size={20} />}
+                        onClick={() => setIsSidebarOpen(true)}
+                        label="Menu"
+                        className='md:hidden text-oyster hover:bg-transparent hover:text-nevada'
+                    />
+
                     <IconButton
                         icon={<ArrowLeft size={20} />}
                         onClick={() => navigate(`/agents/${agent.categoryId || agent.category?.id}`)}
                         label="Atrás"
                         className='text-oyster hover:bg-transparent hover:text-nevada'
                     />
-                    <div className="flex-1">
+                    <div className="flex-1 hidden md:block">
                         <h2 className="font-semibold text-oyster">{agent.name}</h2>
                         <p className="text-sm text-nevada">{agent.description}</p>
                     </div>
                 </div>
 
                 {agent.name === 'Generar imágenes' && (
-                    <div className="bg-plum/20 px-6 py-3 flex items-start gap-3">
+                    <div className="bg-plum/20 px-6 py-3 hidden md:flex items-start gap-3">
                         <Info size={18} className="text-plum mt-0.5 flex-shrink-0" />
                         <p className="text-sm text-oyster">
                             <span className="font-semibold block mb-0.5">Recomendación:</span>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquarePlus, Trash2, X, Menu } from 'lucide-react';
+import { MessageSquarePlus, Trash2, X } from 'lucide-react';
 import { Conversation } from '../../types';
 import { IconButton } from '../ui/IconButton';
 import { ConfirmationModal } from '../ui/ConfirmationModal';
@@ -12,6 +12,8 @@ interface ConversationSidebarProps {
   onNewConversation: () => void;
   onDeleteConversation: (conversationId: string) => void;
   maxConversations: number;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
@@ -22,8 +24,9 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
   onNewConversation,
   onDeleteConversation,
   maxConversations,
+  isOpen,
+  onClose,
 }) => {
-  const [isOpen, setIsOpen] = useState(true);
   const [confirmationState, setConfirmationState] = useState<{
     isOpen: boolean;
     conversationId: string | null;
@@ -63,30 +66,33 @@ export const ConversationSidebar: React.FC<ConversationSidebarProps> = ({
     return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
   };
 
-  if (!isOpen) {
-    return (
-      <div className="fixed left-4 top-20 z-40">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="bg-smoke p-3 rounded-lg shadow-lg hover:bg-haze/30 transition-colors border border-haze/30"
-        >
-          <Menu size={20} className="text-oyster" />
-        </button>
-      </div>
-    );
-  }
-
   return (
     <>
-      <div className="w-80 bg-grafite flex flex-col h-full">
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      <div className={`
+        fixed md:relative 
+        inset-y-0 left-0 
+        w-80 bg-grafite 
+        flex flex-col h-full 
+        z-50 
+        transition-transform duration-300 ease-in-out
+        ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+      `}>
         <div className="p-4 border-b border-smoke">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-oyster">Conversaciones</h3>
             <IconButton
               icon={<X size={18} />}
-              onClick={() => setIsOpen(false)}
+              onClick={onClose}
               label="Cerrar"
-              className="hover:bg-smoke text-oyster"
+              className="md:hidden hover:bg-smoke text-oyster"
             />
           </div>
 

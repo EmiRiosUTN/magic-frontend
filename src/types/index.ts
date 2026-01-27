@@ -19,6 +19,7 @@ export interface User {
   subscriptionType: SubscriptionType;
   language?: Language;
   notificationEmail?: string;
+  messageCount?: number;
 }
 
 export interface LoginResponse {

@@ -21,20 +21,20 @@ export const LandingFeatures: React.FC = () => {
     ];
 
     return (
-        <section className="max-w-7xl mx-auto px-6 py-10">
-            <div className="grid md:grid-cols-3 gap-10">
+        <section className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-10">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-10">
                 {features.map((feature, index) => {
                     const Icon = feature.icon;
                     return (
                         <div
                             key={index}
-                            className="bg-neutral-900 p-8 rounded-2xl hover:scale-105 transition-all"
+                            className="bg-neutral-900 p-6 md:p-8 rounded-2xl hover:scale-105 transition-all"
                         >
                             <div className="flex flex-row items-center gap-3 mb-2">
-                                <div className="w-10 h-10 bg-swirl rounded-xl flex items-center justify-center">
+                                <div className="w-10 h-10 bg-swirl rounded-xl flex items-center justify-center flex-shrink-0">
                                     <Icon size={24} className="text-grafite" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-swirl">
+                                <h3 className="text-lg md:text-xl font-semibold text-swirl">
                                     {feature.title}
                                 </h3>
                             </div>

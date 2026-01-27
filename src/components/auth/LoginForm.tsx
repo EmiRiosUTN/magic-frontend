@@ -26,11 +26,13 @@ export const LoginForm: React.FC = () => {
 
     return (
         <div className="w-full max-w-md">
-            <div className="bg-grafite rounded-2xl shadow-xl p-8">
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-light text-plum mb-2 font-inter">
-                        MagicAI Platform
-                    </h1>
+            <div className="bg-grafite rounded-2xl shadow-xl p-6 md:p-8">
+                <div className="text-center mb-6 md:mb-8">
+                    <img
+                        src="/images/logo-11.webp"
+                        alt="MagicAI Platform"
+                        className="h-16 w-auto mx-auto mb-4 object-contain"
+                    />
                     <p className="text-nevada font-roboto">
                         Inicia sesión para continuar
                     </p>
