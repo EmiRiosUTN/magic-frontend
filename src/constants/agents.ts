@@ -271,6 +271,16 @@ export const AGENTS: Agent[] = [
     categoryId: 'social',
   },
   {
+    id: 'video-generator',
+    name: 'Generador de Videos',
+    description: 'Genera videos impresionantes a partir de texto con Veo',
+    icon: 'film',
+    model: 'gemini',
+    aiProvider: 'GEMINI',
+    hasTools: true,
+    categoryId: 'video',
+  },
+  {
     id: 'video-editor',
     name: 'Editor de Video',
     description: 'Guías de edición y efectos para videos',

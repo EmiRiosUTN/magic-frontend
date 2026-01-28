@@ -83,42 +83,50 @@ export const AgentSelection: React.FC<AgentSelectionProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {agents.map((agent) => {
-              const Icon = Icons[agent.icon as keyof typeof Icons] as React.ComponentType<{
-                size?: number;
-                className?: string;
-              }>;
+            {agents
+              .sort((a, b) => {
+                // Force "Generar vídeos" (Veo) to be first
+                const videoAgentId = '00000000-0000-0000-0000-000000000003';
+                if (a.id === videoAgentId) return -1;
+                if (b.id === videoAgentId) return 1;
+                return 0;
+              })
+              .map((agent) => {
+                const Icon = Icons[agent.icon as keyof typeof Icons] as React.ComponentType<{
+                  size?: number;
+                  className?: string;
+                }>;
 
-              return (
-                <button
-                  key={agent.id}
-                  onClick={() => onSelectAgent(agent.id)}
-                  className="group bg-neutral-900 p-4 md:p-6 rounded-2xl hover:shadow-xl transition-all text-left"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-swirl rounded-xl flex-shrink-0 group-hover:bg-plum transition-colors">
-                      {Icon && <Icon size={24} className="text-slate-700 transition-colors" />}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-bold text-swirl mb-2 group-hover:text-plum">
-                        {agent.name}
-                      </h3>
-                      <p className="text-sm text-haze leading-relaxed mb-3">
-                        {agent.description}
-                      </p>
-                      <div className="flex items-center gap-2">
-                        <span className={`text-xs px-2 py-1 rounded-full ${agent.model === 'openai'
-                          ? 'bg-green-100 text-green-700'
-                          : 'bg-blue-100 text-blue-700'
-                          }`}>
-                          {agent.model === 'openai' ? 'OpenAI' : 'Gemini'}
-                        </span>
+                return (
+                  <button
+                    key={agent.id}
+                    onClick={() => onSelectAgent(agent.id)}
+                    className="group bg-neutral-900 p-4 md:p-6 rounded-2xl hover:shadow-xl transition-all text-left"
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 bg-swirl rounded-xl flex-shrink-0 group-hover:bg-plum transition-colors">
+                        {Icon && <Icon size={24} className="text-slate-700 transition-colors" />}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-bold text-swirl mb-2 group-hover:text-plum">
+                          {agent.name}
+                        </h3>
+                        <p className="text-sm text-haze leading-relaxed mb-3">
+                          {agent.description}
+                        </p>
+                        <div className="flex items-center gap-2">
+                          <span className={`text-xs px-2 py-1 rounded-full ${agent.model === 'openai'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-blue-100 text-blue-700'
+                            }`}>
+                            {agent.model === 'openai' ? 'OpenAI' : 'Gemini'}
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
           </div>
         </div>
       </main>

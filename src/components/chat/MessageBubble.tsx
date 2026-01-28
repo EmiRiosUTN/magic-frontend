@@ -14,6 +14,8 @@ const ImageRenderer: React.FC<any> = ({ node, ...props }) => {
   const [imgError, setImgError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const isVideo = props.src && (/\.(mp4|webm|mov)$/i.test(props.src) || props.src.endsWith('#.mp4'));
+
   if (imgError) {
     return (
       <span className="block p-4 bg-smoke rounded-lg border border-white/10 flex items-center gap-3 text-oyster">
@@ -21,8 +23,8 @@ const ImageRenderer: React.FC<any> = ({ node, ...props }) => {
           <span className="text-xs">⚠️</span>
         </span>
         <span className="flex flex-col">
-          <span className="text-sm font-medium text-swirl">No se pudo cargar la imagen</span>
-          <span className="text-xs text-haze truncate max-w-[200px]">{props.alt || 'Imagen desconocida'}</span>
+          <span className="text-sm font-medium text-swirl">No se pudo cargar {isVideo ? 'el video' : 'la imagen'}</span>
+          <span className="text-xs text-haze truncate max-w-[200px]">{props.alt || 'Archivo desconocido'}</span>
         </span>
       </span>
     );
@@ -30,18 +32,36 @@ const ImageRenderer: React.FC<any> = ({ node, ...props }) => {
 
   return (
     <>
-      {/* eslint-disable-next-line jsx-a11y/alt-text */}
-      <img
-        {...props}
-        className="rounded-lg cursor-pointer hover:opacity-80 transition-opacity max-h-60 object-contain bg-black/20"
+      <div
         onClick={() => setIsOpen(true)}
-        onError={() => setImgError(true)}
-      />
+        className="relative cursor-pointer group inline-block"
+      >
+        {isVideo ? (
+          <div className="relative rounded-lg overflow-hidden bg-black/20 border border-white/10 max-h-60 flex items-center justify-center min-w-[200px] min-h-[150px]">
+            <video
+              src={props.src}
+              className="max-h-60 object-contain opacity-80 group-hover:opacity-60 transition-opacity"
+              muted
+              preload="metadata"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <PlayCircle size={48} className="text-white/80 drop-shadow-lg group-hover:scale-110 transition-transform" />
+            </div>
+          </div>
+        ) : (
+          /* eslint-disable-next-line jsx-a11y/alt-text */
+          <img
+            {...props}
+            className="rounded-lg hover:opacity-80 transition-opacity max-h-60 object-contain bg-black/20"
+            onError={() => setImgError(true)}
+          />
+        )}
+      </div>
       <MediaModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         src={props.src || ''}
-        type="image"
+        type={isVideo ? 'video' : 'image'}
         alt={props.alt}
       />
     </>
@@ -52,7 +72,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   const isUser = message.role.toLowerCase() === 'user';
 
   const isVideoUrl = (url: string) => {
-    return /\.(mp4|webm|mov)$/i.test(url);
+    return /\.(mp4|webm|mov)$/i.test(url) || url.endsWith('#.mp4');
   };
 
   return (
